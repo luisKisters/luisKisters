@@ -14,7 +14,7 @@
   - [Python](https://www.python.org/) (intermediate)
   - [C++](https://www.cplusplus.com/) (basics)
 - 🚀 Frameworks:
-  - [ReactJS](https://reactjs.org/) (basics)
+  - [ReactJS](https://https://react.dev/) (basics)
   - [Pygame](https://www.pygame.org/) (intermediate)
   - [React Native](https://reactnative.dev/) (some small basics)
   - [Django](https://www.djangoproject.com/) (learning right now)
