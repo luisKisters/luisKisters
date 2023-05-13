@@ -3,7 +3,7 @@
 - 🌱 I’m currently learning PyTorch and Django.
 - 💬 Ask me about everything related to my repositories.
 - 📫 How to reach me:
-  - [✉️ Email](mailto:luis.w.kisters@gmail.com)
+  - [✉️ Email](mailto:luis.w.kisters@gmail.com): luis.w.kisters@gmail.com
   - [💼 LinkedIn](https://www.linkedin.com/in/luis-kisters-484650271/)
   - [🌐 Portfolio](http://84.140.155.206:3000/)
 - 🎓 Education: Currently in Waldorf School, 9th grade.
