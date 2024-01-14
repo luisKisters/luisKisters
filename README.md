@@ -6,7 +6,7 @@
   - [✉️ Email](mailto:luis.w.kisters@gmail.com): luis.w.kisters@gmail.com
   - [💼 LinkedIn](https://www.linkedin.com/in/luis-kisters-484650271/)
   - [🌐 Portfolio](http://84.140.155.206:3000/)
-- 🎓 Education: Currently in Waldorf School, 9th grade.
+- 🎓 Education: Currently in Waldorf School, 10th grade.
 - 💻 Programming Languages:
   - [HTML & CSS](https://developer.mozilla.org/en-US/docs/Web/HTML) (intermediate)
   - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (basics)
