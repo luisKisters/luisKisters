@@ -4,8 +4,8 @@
 - 💬 Ask me about everything related to my repositories.
 - 📫 How to reach me:
   - [✉️ Email](mailto:luis.w.kisters@gmail.com): luis.w.kisters@gmail.com
-  - [💼 LinkedIn](https://www.linkedin.com/in/luis-kisters-484650271/)
-  - [🌐 Portfolio](http://84.140.155.206:3000/)
+  - [💼 LinkedIn](https://linkedin.com/in/luis-kisters-484650271/)
+  - [🌐 Portfolio](https://old.luiskisters.me/)
 - 🎓 Education: Currently in Waldorf School, 10th grade.
 - 💻 Programming Languages:
   - [HTML & CSS](https://developer.mozilla.org/en-US/docs/Web/HTML) (intermediate)
