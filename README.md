@@ -18,10 +18,6 @@ I gained enriching experience during an internship at Gärtnerei Rengoldshausen,
 *   Serving as a **Board Member & Delegate** at Waldorf Landesschüler:innenvertretung Berlin & Brandenburg.
 *   Part of the **Student Council (SV)** at Freie Waldorfschule Kreuzberg.
 
-Here’s your improved and sorted Markdown version of the skills list, with cleaner categorization and clearer labeling of skills that are either in early stages or lack real-world application. I used an asterisk * for these skills, and added a footnote for clarity.
-
-⸻
-
 ## 💻 Skills & Technologies
 
 ### 🧠 Core Programming Languages
@@ -62,13 +58,12 @@ Exercising 🏋️‍♀️, Reading 📚, Coding 💻, Meeting up with friends 
 
 ## 🎓 Education
 
-*   **Freie Waldorfschule Kreuzberg:** 2014 - 2026. Currently in Waldorf School, 10th grade.
+*   **Freie Waldorfschule Kreuzberg:** 2014 - 2026. Currently in Waldorf School, 11th grade.
 
 ## 📫 How to reach me
 
 *   **Email:** luis.w.kisters@gmail.com
 *   **LinkedIn:** https://linkedin.com/in/luis-kisters-484650271/
-*   **Portfolio:** https://old.luiskisters.me/
 *   Ask me about everything related to my repositories.
 
 📍 Location: Berlin, Germany.
