@@ -16,7 +16,7 @@ I gained enriching experience during an internship at Gärtnerei Rengoldshausen,
 Python, Typescript, HTML & CSS, C++\*, Golang\*
 
 ### ⚙️ Frameworks & Libraries
-ReactJS, Next.js, TailwindCSS, React Native, Expo FastAPI* Django, PyGame, Reflex*, PayloadCMS
+ReactJS, Next.js, TailwindCSS, React Native, Expo FastAPI* Django*, PyGame, Reflex*, PayloadCMS
 
 ### 🤖 AI & ML
 PyTorch, TensorFlow, OpenAI API, Gemini API
