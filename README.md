@@ -10,40 +10,16 @@ My journey began in 9th grade at [Freie Waldorfschule Kreuzberg (FWSK)](https://
 
 I gained enriching experience during an internship at Gärtnerei Rengoldshausen, learning the value of dedication and embracing long hours. I also gained practical tech experience at Muli Technologies GmbH, honing teamwork, programming, and UX testing skills. While I discovered my love for collaboration, I found remote work wasn't my forte at that point. I was hired at Narratic Labs at 17 and consider it a 'dream job'.
 
-## 🌱 Currently Learning & Working On
-
-*   **Currently learning PyTorch and Django**.
-*   Working as a **Full Stack Developer & Growth Specialist** at Narratic Labs.
-*   Working in the **Education Policy Section, focusing on Public Relations & IT** at WaldorfSV.
-*   Serving as a **Board Member & Delegate** at Waldorf Landesschüler:innenvertretung Berlin & Brandenburg.
-*   Part of the **Student Council (SV)** at Freie Waldorfschule Kreuzberg.
-
 ## 💻 Skills & Technologies
 
 ### 🧠 Core Programming Languages
-- Python
-- TypeScript
-- HTML & CSS
-- C++*
-- Golang*
+Python, Typescript, HTML & CSS, C+*, Golang*
 
 ### ⚙️ Frameworks & Libraries
-- ReactJS
-- Next.js
-- TailwindCSS
-- React Native
-- Expo
-- FastAPI
-- Django*
-- PyGame
-- Reflex*
-- PayloadCMS*
+ReactJS, Next.js, TailwindCSS, React Native, Expo FastAPI* Django*, PyGame, Reflex*, PayloadCMS*
 
 ### 🤖 AI & ML
-- PyTorch
-- TensorFlow
-- OpenAI API
-- Gemini API
+PyTorch, TensorFlow, OpenAI API, Gemini API
 
 _* Marked skills are either at beginner level or currently lack hands-on project or job experience._
 
