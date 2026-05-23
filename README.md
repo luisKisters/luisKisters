@@ -1,6 +1,6 @@
 # Hi there 👋
 
-**Luis Kisters** - **18-year-old** | Full Stack Developer & Growth Specialist [Narratic AI](https://www.narratic.ai/) | Public Relations & IT [WaldorfSV](https://waldorfsv.de/)
+**Luis Kisters** - **19-year-old** | GTM Automation Engineer @ [Levity](https://levity.ai/) | Public Relations & IT [WaldorfSV](https://waldorfsv.de/)
 
 I'm amazed by the always evolving technology and a passionate learner. I have a passion for effecting positive change and am currently contributing my skills to WaldorfSV as part of the Education Policy Section, focusing on Public Relations & Tech. I also work at Narratic Labs as a Full Stack Developer & Growth Specialist. I believe in actions speaking louder than words and encourage you to judge me based on my deeds.
 
@@ -13,10 +13,10 @@ I gained enriching experience during an internship at Gärtnerei Rengoldshausen,
 ## 💻 Skills & Technologies
 
 ### 🧠 Core Programming Languages
-Python, Typescript, HTML & CSS, C++\*, Golang\*
+Python & Typescript
 
 ### ⚙️ Frameworks & Libraries
-ReactJS, Next.js, TailwindCSS, React Native, Expo FastAPI* Django*, PyGame, Reflex*, PayloadCMS
+ReactJS, Next.js, TailwindCSS, React Native*, Expo FastAPI* Django*, PyGame, Reflex*, PayloadCMS*
 
 ### 🤖 AI & ML
 PyTorch, TensorFlow, OpenAI API, Gemini API
@@ -25,8 +25,8 @@ _* Marked skills are either at beginner level or currently lack hands-on project
 
 ## 🌎 Languages
 
-*   **German:** Native or bilingual proficiency
-*   **English:** Fluent with some grammar mistakes and a German accent (Note: Another source indicates Limited working proficiency)
+*   **German:** Native proficiency
+*   **English:** Limited working proficiency
 
 ## ❤️ Hobbies
 
@@ -34,12 +34,12 @@ Exercising 🏋️‍♀️, Reading 📚, Coding 💻, Meeting up with friends 
 
 ## 🎓 Education
 
-*   **Freie Waldorfschule Kreuzberg:** 2014 - 2026. Currently in Waldorf School, 11th grade.
+*   **Freie Waldorfschule Kreuzberg:** 2014 - 2027. Currently in Waldorf School, 11th grade.
 
 ## 📫 How to reach me
 
 *   **Email:** luis.w.kisters@gmail.com
-*   **LinkedIn:** https://linkedin.com/in/luis-kisters-484650271/
+*   **LinkedIn:** https://linkedin.com/in/luiskisters
 *   Ask me about everything related to my repositories.
 
 📍 Location: Berlin, Germany.
