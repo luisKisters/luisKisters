@@ -1,0 +1,51 @@
+{
+  "current_focus": [
+    {
+      "name": "skills",
+      "value": 9,
+      "detail": "6 Aug 2026"
+    },
+    {
+      "name": "emdash",
+      "value": 7,
+      "detail": "6 Aug 2026"
+    },
+    {
+      "name": "anchr",
+      "value": 6,
+      "detail": "6 Aug 2026"
+    },
+    {
+      "name": "solidtime-desktop",
+      "value": 4,
+      "detail": "4 Aug 2026"
+    }
+  ],
+  "most_built": [
+    {
+      "name": "model-releases-bot",
+      "value": 83,
+      "detail": "27 Jul 2026"
+    },
+    {
+      "name": "bahnhofjaeger",
+      "value": 74,
+      "detail": "6 Dec 2025"
+    },
+    {
+      "name": "summaryApp",
+      "value": 66,
+      "detail": "11 May 2023"
+    },
+    {
+      "name": "timy",
+      "value": 49,
+      "detail": "5 Jun 2026"
+    },
+    {
+      "name": "calendrino",
+      "value": 39,
+      "detail": "10 Jun 2026"
+    }
+  ]
+}

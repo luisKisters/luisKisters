@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="332" viewBox="0 0 560 332" role="img" aria-labelledby="title desc">
+  <title id="title">Most built</title>
+  <desc id="desc">Own commits · original public repos · default branches</desc>
+  <style>
+    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; }
+    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; } }
+    text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+    .title { fill:var(--title); font-size:20px; font-weight:700; }
+    .subtitle,.detail,.rank { fill:var(--muted); font-size:12px; }
+    .repo { fill:var(--text); font-size:14px; font-weight:600; }
+    .value { fill:var(--text); font-size:13px; }
+    .track { fill:var(--track); }
+    .bar { fill:var(--accent); }
+  </style>
+  <rect x="0.5" y="0.5" width="559" height="331" rx="12" fill="var(--bg)" stroke="var(--border)" />
+  <text x="24" y="34" class="title">Most built</text>
+  <text x="24" y="56" class="subtitle">Own commits · original public repos · default branches</text>
+  
+    <text x="24" y="92" class="rank">01</text>
+    <text x="58" y="92" class="repo">model-releases-bot</text>
+    <text x="536" y="92" text-anchor="end" class="value">83 commits</text>
+    <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
+    <text x="536" y="107" text-anchor="end" class="detail">27 Jul 2026</text>
+    <text x="24" y="140" class="rank">02</text>
+    <text x="58" y="140" class="repo">bahnhofjaeger</text>
+    <text x="536" y="140" text-anchor="end" class="value">74 commits</text>
+    <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="150" width="160" height="4" rx="2" class="bar" />
+    <text x="536" y="155" text-anchor="end" class="detail">6 Dec 2025</text>
+    <text x="24" y="188" class="rank">03</text>
+    <text x="58" y="188" class="repo">summaryApp</text>
+    <text x="536" y="188" text-anchor="end" class="value">66 commits</text>
+    <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="198" width="143" height="4" rx="2" class="bar" />
+    <text x="536" y="203" text-anchor="end" class="detail">11 May 2023</text>
+    <text x="24" y="236" class="rank">04</text>
+    <text x="58" y="236" class="repo">timy</text>
+    <text x="536" y="236" text-anchor="end" class="value">49 commits</text>
+    <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="246" width="106" height="4" rx="2" class="bar" />
+    <text x="536" y="251" text-anchor="end" class="detail">5 Jun 2026</text>
+    <text x="24" y="284" class="rank">05</text>
+    <text x="58" y="284" class="repo">calendrino</text>
+    <text x="536" y="284" text-anchor="end" class="value">39 commits</text>
+    <rect x="58" y="294" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="294" width="85" height="4" rx="2" class="bar" />
+    <text x="536" y="299" text-anchor="end" class="detail">10 Jun 2026</text>
+  
+</svg>

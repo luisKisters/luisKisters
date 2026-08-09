@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="284" viewBox="0 0 560 284" role="img" aria-labelledby="title desc">
+  <title id="title">Current focus</title>
+  <desc id="desc">Public push activity · last 30 days · refreshes daily</desc>
+  <style>
+    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; }
+    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; } }
+    text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+    .title { fill:var(--title); font-size:20px; font-weight:700; }
+    .subtitle,.detail,.rank { fill:var(--muted); font-size:12px; }
+    .repo { fill:var(--text); font-size:14px; font-weight:600; }
+    .value { fill:var(--text); font-size:13px; }
+    .track { fill:var(--track); }
+    .bar { fill:var(--accent); }
+  </style>
+  <rect x="0.5" y="0.5" width="559" height="283" rx="12" fill="var(--bg)" stroke="var(--border)" />
+  <text x="24" y="34" class="title">Current focus</text>
+  <text x="24" y="56" class="subtitle">Public push activity · last 30 days · refreshes daily</text>
+  
+    <text x="24" y="92" class="rank">01</text>
+    <text x="58" y="92" class="repo">skills</text>
+    <text x="536" y="92" text-anchor="end" class="value">9 pushes</text>
+    <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
+    <text x="536" y="107" text-anchor="end" class="detail">6 Aug 2026</text>
+    <text x="24" y="140" class="rank">02</text>
+    <text x="58" y="140" class="repo">emdash</text>
+    <text x="536" y="140" text-anchor="end" class="value">7 pushes</text>
+    <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="150" width="140" height="4" rx="2" class="bar" />
+    <text x="536" y="155" text-anchor="end" class="detail">6 Aug 2026</text>
+    <text x="24" y="188" class="rank">03</text>
+    <text x="58" y="188" class="repo">anchr</text>
+    <text x="536" y="188" text-anchor="end" class="value">6 pushes</text>
+    <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="198" width="120" height="4" rx="2" class="bar" />
+    <text x="536" y="203" text-anchor="end" class="detail">6 Aug 2026</text>
+    <text x="24" y="236" class="rank">04</text>
+    <text x="58" y="236" class="repo">solidtime-desktop</text>
+    <text x="536" y="236" text-anchor="end" class="value">4 pushes</text>
+    <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
+    <rect x="58" y="246" width="80" height="4" rx="2" class="bar" />
+    <text x="536" y="251" text-anchor="end" class="detail">4 Aug 2026</text>
+  
+</svg>
