@@ -1,18 +1,18 @@
 {
   "current_focus": [
     {
-      "name": "skills",
-      "value": 9,
-      "detail": "6 Aug 2026"
-    },
-    {
       "name": "emdash",
-      "value": 7,
-      "detail": "6 Aug 2026"
+      "value": 10,
+      "detail": "10 Aug 2026"
     },
     {
       "name": "anchr",
-      "value": 6,
+      "value": 10,
+      "detail": "10 Aug 2026"
+    },
+    {
+      "name": "skills",
+      "value": 9,
       "detail": "6 Aug 2026"
     },
     {

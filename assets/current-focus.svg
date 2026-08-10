@@ -17,28 +17,28 @@
   <text x="24" y="56" class="subtitle">Public push activity · last 30 days · refreshes daily</text>
   
     <text x="24" y="92" class="rank">01</text>
-    <text x="58" y="92" class="repo">skills</text>
-    <text x="536" y="92" text-anchor="end" class="value">9 pushes</text>
+    <text x="58" y="92" class="repo">emdash</text>
+    <text x="536" y="92" text-anchor="end" class="value">10 pushes</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
-    <text x="536" y="107" text-anchor="end" class="detail">6 Aug 2026</text>
+    <text x="536" y="107" text-anchor="end" class="detail">10 Aug 2026</text>
     <text x="24" y="140" class="rank">02</text>
-    <text x="58" y="140" class="repo">emdash</text>
-    <text x="536" y="140" text-anchor="end" class="value">7 pushes</text>
+    <text x="58" y="140" class="repo">anchr</text>
+    <text x="536" y="140" text-anchor="end" class="value">10 pushes</text>
     <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="150" width="140" height="4" rx="2" class="bar" />
-    <text x="536" y="155" text-anchor="end" class="detail">6 Aug 2026</text>
+    <rect x="58" y="150" width="180" height="4" rx="2" class="bar" />
+    <text x="536" y="155" text-anchor="end" class="detail">10 Aug 2026</text>
     <text x="24" y="188" class="rank">03</text>
-    <text x="58" y="188" class="repo">anchr</text>
-    <text x="536" y="188" text-anchor="end" class="value">6 pushes</text>
+    <text x="58" y="188" class="repo">skills</text>
+    <text x="536" y="188" text-anchor="end" class="value">9 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="120" height="4" rx="2" class="bar" />
+    <rect x="58" y="198" width="162" height="4" rx="2" class="bar" />
     <text x="536" y="203" text-anchor="end" class="detail">6 Aug 2026</text>
     <text x="24" y="236" class="rank">04</text>
     <text x="58" y="236" class="repo">solidtime-desktop</text>
     <text x="536" y="236" text-anchor="end" class="value">4 pushes</text>
     <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="246" width="80" height="4" rx="2" class="bar" />
+    <rect x="58" y="246" width="72" height="4" rx="2" class="bar" />
     <text x="536" y="251" text-anchor="end" class="detail">4 Aug 2026</text>
   
 </svg>
