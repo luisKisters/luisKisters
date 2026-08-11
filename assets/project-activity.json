@@ -2,7 +2,7 @@
   "current_focus": [
     {
       "name": "emdash",
-      "value": 10,
+      "value": 11,
       "detail": "10 Aug 2026"
     },
     {
@@ -12,13 +12,8 @@
     },
     {
       "name": "skills",
-      "value": 9,
+      "value": 8,
       "detail": "6 Aug 2026"
-    },
-    {
-      "name": "solidtime-desktop",
-      "value": 4,
-      "detail": "4 Aug 2026"
     }
   ],
   "most_built": [
