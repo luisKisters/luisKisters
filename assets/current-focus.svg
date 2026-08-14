@@ -30,10 +30,10 @@
     <text x="536" y="155" text-anchor="end" class="detail">10 Aug 2026</text>
     <text x="24" y="188" class="rank">03</text>
     <text x="58" y="188" class="repo">skills</text>
-    <text x="536" y="188" text-anchor="end" class="value">7 pushes</text>
+    <text x="536" y="188" text-anchor="end" class="value">6 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="115" height="4" rx="2" class="bar" />
-    <text x="536" y="203" text-anchor="end" class="detail">6 Aug 2026</text>
+    <rect x="58" y="198" width="98" height="4" rx="2" class="bar" />
+    <text x="536" y="203" text-anchor="end" class="detail">13 Aug 2026</text>
     <text x="24" y="236" class="rank">04</text>
     <text x="58" y="236" class="repo">swift-markdown-engine</text>
     <text x="536" y="236" text-anchor="end" class="value">3 pushes</text>
