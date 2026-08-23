@@ -18,7 +18,7 @@
   
     <text x="24" y="92" class="rank">01</text>
     <text x="58" y="92" class="repo">Listnr</text>
-    <text x="536" y="92" text-anchor="end" class="value">9 pushes</text>
+    <text x="536" y="92" text-anchor="end" class="value">10 pushes</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
     <text x="536" y="107" text-anchor="end" class="detail">22 Aug 2026</text>
@@ -26,25 +26,25 @@
     <text x="58" y="140" class="repo">emdash</text>
     <text x="536" y="140" text-anchor="end" class="value">5 pushes</text>
     <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="150" width="100" height="4" rx="2" class="bar" />
+    <rect x="58" y="150" width="90" height="4" rx="2" class="bar" />
     <text x="536" y="155" text-anchor="end" class="detail">10 Aug 2026</text>
     <text x="24" y="188" class="rank">03</text>
     <text x="58" y="188" class="repo">skills</text>
     <text x="536" y="188" text-anchor="end" class="value">3 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="60" height="4" rx="2" class="bar" />
+    <rect x="58" y="198" width="54" height="4" rx="2" class="bar" />
     <text x="536" y="203" text-anchor="end" class="detail">19 Aug 2026</text>
     <text x="24" y="236" class="rank">04</text>
     <text x="58" y="236" class="repo">swift-markdown-engine</text>
     <text x="536" y="236" text-anchor="end" class="value">3 pushes</text>
     <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="246" width="60" height="4" rx="2" class="bar" />
+    <rect x="58" y="246" width="54" height="4" rx="2" class="bar" />
     <text x="536" y="251" text-anchor="end" class="detail">11 Aug 2026</text>
     <text x="24" y="284" class="rank">05</text>
     <text x="58" y="284" class="repo">anchr</text>
-    <text x="536" y="284" text-anchor="end" class="value">2 pushes</text>
+    <text x="536" y="284" text-anchor="end" class="value">1 pushes</text>
     <rect x="58" y="294" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="294" width="40" height="4" rx="2" class="bar" />
+    <rect x="58" y="294" width="18" height="4" rx="2" class="bar" />
     <text x="536" y="299" text-anchor="end" class="detail">10 Aug 2026</text>
   
 </svg>
