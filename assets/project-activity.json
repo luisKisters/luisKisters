@@ -2,13 +2,8 @@
   "current_focus": [
     {
       "name": "Listnr",
-      "value": 10,
-      "detail": "22 Aug 2026"
-    },
-    {
-      "name": "emdash",
-      "value": 5,
-      "detail": "10 Aug 2026"
+      "value": 18,
+      "detail": "24 Aug 2026"
     },
     {
       "name": "skills",
@@ -19,6 +14,11 @@
       "name": "swift-markdown-engine",
       "value": 3,
       "detail": "11 Aug 2026"
+    },
+    {
+      "name": "emdash",
+      "value": 3,
+      "detail": "10 Aug 2026"
     }
   ],
   "most_built": [
