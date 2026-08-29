@@ -16,8 +16,13 @@
       "detail": "11 Aug 2026"
     },
     {
+      "name": "anchr",
+      "value": 2,
+      "detail": "27 Aug 2026"
+    },
+    {
       "name": "emdash",
-      "value": 3,
+      "value": 2,
       "detail": "10 Aug 2026"
     }
   ],
