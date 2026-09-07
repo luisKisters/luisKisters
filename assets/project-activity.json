@@ -7,18 +7,23 @@
     },
     {
       "name": "skills",
-      "value": 5,
+      "value": 4,
       "detail": "26 Aug 2026"
+    },
+    {
+      "name": "nootch",
+      "value": 2,
+      "detail": "6 Sep 2026"
+    },
+    {
+      "name": "swift-markdown-engine",
+      "value": 2,
+      "detail": "5 Sep 2026"
     },
     {
       "name": "anchr",
       "value": 2,
       "detail": "27 Aug 2026"
-    },
-    {
-      "name": "swift-markdown-engine",
-      "value": 1,
-      "detail": "5 Sep 2026"
     }
   ],
   "most_built": [
