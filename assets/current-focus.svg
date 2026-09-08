@@ -1,50 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="560" height="332" viewBox="0 0 560 332" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="284" viewBox="0 0 560 284" role="img" aria-labelledby="title desc">
   <title id="title">Current focus</title>
-  <desc id="desc">Public push activity · last 30 days · refreshes daily</desc>
+  <desc id="desc">All repos · last 30 days</desc>
   <style>
-    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; }
-    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; } }
+    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; --pill-bg:rgba(46,160,67,.15); --pill-text:#3fb950; --cell0:#161b22; --cell1:#0e4429; --cell2:#006d32; --cell3:#26a641; --cell4:#39d353; }
+    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; --pill-bg:rgba(31,136,61,.12); --pill-text:#1a7f37; --cell0:#ebedf0; --cell1:#9be9a8; --cell2:#40c463; --cell3:#30a14e; --cell4:#216e39; } }
     text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
     .title { fill:var(--title); font-size:20px; font-weight:700; }
-    .subtitle,.detail,.rank { fill:var(--muted); font-size:12px; }
+    .subtitle,.detail,.rank,.axis { fill:var(--muted); }
+    .subtitle,.detail,.rank { font-size:12px; }
+    .axis { font-size:10px; }
     .repo { fill:var(--text); font-size:14px; font-weight:600; }
     .value { fill:var(--text); font-size:13px; }
     .track { fill:var(--track); }
     .bar { fill:var(--accent); }
-  </style>
-  <rect x="0.5" y="0.5" width="559" height="331" rx="12" fill="var(--bg)" stroke="var(--border)" />
+    .stat { fill:var(--title); font-size:20px; font-weight:700; }
+    .stat-label { fill:var(--muted); font-size:11px; }
+    .pill { fill:var(--pill-bg); }
+    .pill-text { fill:var(--pill-text); font-size:11px; font-weight:600; }
+    .cell0 { fill:var(--cell0); }
+    .cell1 { fill:var(--cell1); }
+    .cell2 { fill:var(--cell2); }
+    .cell3 { fill:var(--cell3); }
+    .cell4 { fill:var(--cell4); }
+</style>
+  <rect x="0.5" y="0.5" width="559" height="283" rx="12" fill="var(--bg)" stroke="var(--border)" />
   <text x="24" y="34" class="title">Current focus</text>
-  <text x="24" y="56" class="subtitle">Public push activity · last 30 days · refreshes daily</text>
-  
+  <text x="24" y="56" class="subtitle">All repos · last 30 days</text>
+  <rect x="416" y="18" width="120" height="20" rx="10" class="pill" />
+  <text x="476" y="31.5" text-anchor="middle" class="pill-text">includes private</text>
+
     <text x="24" y="92" class="rank">01</text>
-    <text x="58" y="92" class="repo">Listnr</text>
-    <text x="536" y="92" text-anchor="end" class="value">31 pushes</text>
+    <text x="58" y="92" class="repo">notetakr</text>
+    <text x="536" y="92" text-anchor="end" class="value">116 pushes</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
-    <text x="536" y="107" text-anchor="end" class="detail">1 Sep 2026</text>
+    <text x="536" y="107" text-anchor="end" class="detail">8 Sep 2026 · private</text>
     <text x="24" y="140" class="rank">02</text>
-    <text x="58" y="140" class="repo">skills</text>
-    <text x="536" y="140" text-anchor="end" class="value">4 pushes</text>
+    <text x="58" y="140" class="repo">Listnr</text>
+    <text x="536" y="140" text-anchor="end" class="value">31 pushes</text>
     <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="150" width="23" height="4" rx="2" class="bar" />
-    <text x="536" y="155" text-anchor="end" class="detail">26 Aug 2026</text>
+    <rect x="58" y="150" width="48" height="4" rx="2" class="bar" />
+    <text x="536" y="155" text-anchor="end" class="detail">1 Sep 2026</text>
     <text x="24" y="188" class="rank">03</text>
-    <text x="58" y="188" class="repo">nootch</text>
-    <text x="536" y="188" text-anchor="end" class="value">2 pushes</text>
+    <text x="58" y="188" class="repo">skills</text>
+    <text x="536" y="188" text-anchor="end" class="value">4 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="12" height="4" rx="2" class="bar" />
-    <text x="536" y="203" text-anchor="end" class="detail">6 Sep 2026</text>
+    <rect x="58" y="198" width="10" height="4" rx="2" class="bar" />
+    <text x="536" y="203" text-anchor="end" class="detail">26 Aug 2026</text>
     <text x="24" y="236" class="rank">04</text>
-    <text x="58" y="236" class="repo">swift-markdown-engine</text>
+    <text x="58" y="236" class="repo">anchr</text>
     <text x="536" y="236" text-anchor="end" class="value">2 pushes</text>
     <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="246" width="12" height="4" rx="2" class="bar" />
-    <text x="536" y="251" text-anchor="end" class="detail">5 Sep 2026</text>
-    <text x="24" y="284" class="rank">05</text>
-    <text x="58" y="284" class="repo">anchr</text>
-    <text x="536" y="284" text-anchor="end" class="value">2 pushes</text>
-    <rect x="58" y="294" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="294" width="12" height="4" rx="2" class="bar" />
-    <text x="536" y="299" text-anchor="end" class="detail">27 Aug 2026</text>
+    <rect x="58" y="246" width="10" height="4" rx="2" class="bar" />
+    <text x="536" y="251" text-anchor="end" class="detail">27 Aug 2026</text>
   
 </svg>

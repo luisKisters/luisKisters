@@ -25,6 +25,7 @@ jobs:
       - name: Generate widgets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
         run: python scripts/update_profile_widgets.py
 
       - name: Commit changed data
