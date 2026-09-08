@@ -10,7 +10,7 @@ I build agent workflows, automation products, and tools for focused work.
 
 Counts include private contributions.
 
-<img src="./assets/contributions-calendar.svg" width="100%" alt="Luis Kisters contribution calendar, including private contributions">
+<img src="./assets/contributions-daily.svg" width="100%" alt="Daily GitHub contributions over the last 12 months, including private contributions">
 
 ## Project activity
 

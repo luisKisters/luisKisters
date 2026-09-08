@@ -227,8 +227,8 @@ def format_date(value: str) -> str:
 
 
 SVG_STYLE = """
-    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; --pill-bg:rgba(46,160,67,.15); --pill-text:#3fb950; --cell0:#161b22; --cell1:#0e4429; --cell2:#006d32; --cell3:#26a641; --cell4:#39d353; }
-    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; --pill-bg:rgba(31,136,61,.12); --pill-text:#1a7f37; --cell0:#ebedf0; --cell1:#9be9a8; --cell2:#40c463; --cell3:#30a14e; --cell4:#216e39; } }
+    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; --pill-bg:rgba(46,160,67,.15); --pill-text:#3fb950; --line:#39d353; }
+    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; --pill-bg:rgba(31,136,61,.12); --pill-text:#1a7f37; --line:#1a7f37; } }
     text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
     .title { fill:var(--title); font-size:20px; font-weight:700; }
     .subtitle,.detail,.rank,.axis { fill:var(--muted); }
@@ -242,11 +242,14 @@ SVG_STYLE = """
     .stat-label { fill:var(--muted); font-size:11px; }
     .pill { fill:var(--pill-bg); }
     .pill-text { fill:var(--pill-text); font-size:11px; font-weight:600; }
-    .cell0 { fill:var(--cell0); }
-    .cell1 { fill:var(--cell1); }
-    .cell2 { fill:var(--cell2); }
-    .cell3 { fill:var(--cell3); }
-    .cell4 { fill:var(--cell4); }
+    .grid { stroke:var(--track); stroke-width:1; }
+    .monthline { stroke:var(--border); stroke-opacity:.35; }
+    .area { fill:url(#areaFill); }
+    .plot-glow { fill:none; stroke:var(--line); stroke-width:7; stroke-linejoin:round; stroke-linecap:round; opacity:.22; }
+    .plot-line { fill:none; stroke:var(--line); stroke-width:1.8; stroke-linejoin:round; stroke-linecap:round; }
+    .trend { fill:none; stroke:var(--accent); stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round; }
+    .peak-dot { fill:var(--line); }
+    .peak-label { fill:var(--title); font-size:11px; font-weight:600; }
 """
 
 
@@ -299,46 +302,7 @@ def render_card(title: str, subtitle: str, rows: list[dict[str, Any]], value_lab
     return svg_shell(width, height, title, subtitle, body, pill)
 
 
-def render_calendar(collection: dict[str, Any], private_ok: bool) -> str:
-    days = calendar_days(collection)
-    total = sum(day["count"] for day in days)
-    if not days:
-        days = [{"date": collection["_to"], "count": 0}]
-
-    cell, gap = 15, 3
-    pitch = cell + gap
-    grid_left, grid_top = 44, 178
-    weeks = collection["contributionCalendar"]["weeks"]
-
-    columns = len(weeks)
-    grid_width = columns * pitch
-    width = grid_left + grid_width + 24
-    grid_bottom = grid_top + 7 * pitch
-    legend_y = grid_bottom + 30
-    height = legend_y + 22
-
-    counts = [day["count"] for day in days]
-    nonzero = sorted(count for count in counts if count > 0)
-    if nonzero:
-        q1, q2, q3 = nonzero[len(nonzero) // 4], nonzero[len(nonzero) // 2], nonzero[3 * len(nonzero) // 4]
-    else:
-        q1 = q2 = q3 = 1
-
-    def level(count: int) -> int:
-        if count <= 0:
-            return 0
-        if count > q3:
-            return 4
-        if count > q2:
-            return 3
-        if count > q1:
-            return 2
-        return 1
-
-    def cell_class(count: int) -> str:
-        return f"cell{level(count)}"
-
-    # Longest streak and best day
+def streak_and_peak(days: list[dict[str, Any]]) -> tuple[int, int, str]:
     longest = streak = 0
     best_count, best_date = 0, ""
     for day in days:
@@ -349,47 +313,11 @@ def render_calendar(collection: dict[str, Any], private_ok: bool) -> str:
             streak = 0
         if day["count"] > best_count:
             best_count, best_date = day["count"], day["date"]
+    return longest, best_count, best_date
 
-    best_label = f"best day · {format_date(best_date + 'T00:00:00Z')}" if best_count else "best day · –"
-    span_days = max(1, (datetime.fromisoformat(days[-1]["date"]) - datetime.fromisoformat(days[0]["date"])).days + 1)
-    daily_average = round(total / span_days)
 
-    cells: list[str] = []
-    month_labels: list[tuple[int, str]] = []
-    last_month: int | None = None
-    for col, week in enumerate(weeks):
-        week_days = [day for day in week["contributionDays"] if collection["_from"] <= day["date"][:10] <= collection["_to"]]
-        for day in week["contributionDays"]:
-            date = day["date"][:10]
-            if not (collection["_from"] <= date <= collection["_to"]):
-                continue
-            weekday = datetime.fromisoformat(date).weekday() + 1  # 1=Mon … 7=Sun
-            row = weekday % 7  # 0=Sun … 6=Sat
-            x = grid_left + col * pitch
-            y = grid_top + row * pitch
-            cells.append(
-                f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3.5" class="{cell_class(day["contributionCount"])}"><title>{day["contributionCount"]} contribution{"s" if day["contributionCount"] != 1 else ""} on {date}</title></rect>'
-            )
-        first = week_days[0]["date"][:10] if week_days else None
-        for day in week_days:
-            date = day["date"][:10]
-            if not date.endswith("-01"):
-                continue
-            month = int(date[5:7])
-            if month != last_month:
-                month_labels.append((col, datetime.fromisoformat(date).strftime("%b")))
-                last_month = month
-            break
-
-    month_markup = "".join(
-        f'\n    <text x="{grid_left + col * pitch}" y="{grid_top - 8}" class="axis">{name}</text>'
-        for col, name in month_labels
-    )
-    weekday_labels = ""
-    for row, label in ((1, "Mon"), (3, "Wed"), (5, "Fri")):
-        weekday_labels += f'\n    <text x="{grid_left - 10}" y="{grid_top + row * pitch + 11}" text-anchor="end" class="axis">{label}</text>'
-
-    breakdown = " · ".join(
+def contribution_breakdown(collection: dict[str, Any]) -> str:
+    return " · ".join(
         part
         for part in (
             f"{collection['totalCommitContributions']} commits" if collection["totalCommitContributions"] else "",
@@ -401,15 +329,34 @@ def render_calendar(collection: dict[str, Any], private_ok: bool) -> str:
         if part
     )
 
-    legend_cells = "".join(
-        f'<rect x="{368 + index * 20}" y="{legend_y - 12}" width="{cell}" height="{cell}" rx="3.5" class="cell{index}" />'
-        for index in range(5)
-    )
-    legend = f"""
-    <text x="24" y="{legend_y}" class="axis">Less</text>
-    {legend_cells}
-    <text x="{368 + 5 * 20 + 4}" y="{legend_y}" class="axis">More</text>
-    <text x="{width - 24}" y="{legend_y}" text-anchor="end" class="axis">{html.escape(breakdown)}</text>"""
+
+def render_daily_chart(collection: dict[str, Any], private_ok: bool) -> str:
+    days = calendar_days(collection)
+    if not days:
+        days = [{"date": collection["_to"], "count": 0}]
+
+    width, height = 1120, 470
+    plot_left, plot_right = 64, width - 28
+    plot_top, plot_bottom = 172, 386
+    counts = [day["count"] for day in days]
+    n = len(counts)
+    step = (plot_right - plot_left) / max(1, n - 1)
+
+    def x(index: int) -> float:
+        return plot_left + index * step
+
+    def y(count: float) -> float:
+        return plot_bottom - (count / nice_max) * (plot_bottom - plot_top)
+
+    maximum = max(counts)
+    grid_step = next(s for s in (10, 20, 25, 50, 100, 200, 500) if maximum / s <= 4)
+    nice_max = max(grid_step, -(-maximum // grid_step) * grid_step)
+
+    total = sum(counts)
+    longest, best_count, best_date = streak_and_peak(days)
+    best_label = f"best day · {format_date(best_date + 'T00:00:00Z')}" if best_count else "best day · –"
+    span_days = max(1, (datetime.fromisoformat(days[-1]["date"]) - datetime.fromisoformat(days[0]["date"])).days + 1)
+    daily_average = round(total / span_days)
 
     stats = ""
     for index, (value, label) in enumerate(
@@ -420,15 +367,85 @@ def render_calendar(collection: dict[str, Any], private_ok: bool) -> str:
             (str(best_count), best_label),
         )
     ):
-        x = 24 + index * 248
-        stats += f'\n    <text x="{x}" y="112" class="stat">{html.escape(value)}</text>\n    <text x="{x}" y="130" class="stat-label">{html.escape(label)}</text>'
+        sx = 24 + index * 272
+        stats += f'\n    <text x="{sx}" y="112" class="stat">{html.escape(value)}</text>\n    <text x="{sx}" y="130" class="stat-label">{html.escape(label)}</text>'
 
-    body = f"""  {stats}
-  {month_markup}
-  {weekday_labels}
-  {''.join(cells)}{legend}"""
+    grid = ""
+    for tick in range(0, nice_max + 1, grid_step):
+        gy = y(tick)
+        grid += f'\n    <line x1="{plot_left}" y1="{gy:.1f}" x2="{plot_right}" y2="{gy:.1f}" class="grid" />'
+        grid += f'\n    <text x="{plot_left - 10}" y="{gy + 3.5:.1f}" text-anchor="end" class="axis">{tick}</text>'
 
-    subtitle = f"Last {span_days} days · refreshes daily"
+    monthly: dict[str, int] = {}
+    for day in days:
+        monthly[day["date"][:7]] = monthly.get(day["date"][:7], 0) + day["count"]
+
+    months = ""
+    for index, day in enumerate(days):
+        date = day["date"]
+        if not date.endswith("-01"):
+            continue
+        mx = x(index)
+        months += f'\n    <line x1="{mx:.1f}" y1="{plot_top}" x2="{mx:.1f}" y2="{plot_bottom}" class="monthline" />'
+        anchor = "middle"
+        if mx - 20 < plot_left:
+            anchor = "start"
+        elif mx + 20 > plot_right:
+            anchor = "end"
+        label = datetime.fromisoformat(date).strftime("%b")
+        months += f'\n    <text x="{mx:.1f}" y="{plot_bottom + 24}" text-anchor="{anchor}" class="axis" style="font-size:11px">{label}</text>'
+        months += f'\n    <text x="{mx:.1f}" y="{plot_bottom + 40}" text-anchor="{anchor}" class="axis">{monthly[date[:7]]}</text>'
+
+    points = " ".join(f"{x(i):.1f},{y(count):.1f}" for i, count in enumerate(counts))
+    area_path = f"M {x(0):.1f},{plot_bottom} L {points} L {x(n - 1):.1f},{plot_bottom} Z"
+    line_path = f"M {points}"
+
+    trend_points = []
+    for i in range(n):
+        lo, hi = max(0, i - 3), min(n, i + 4)
+        window = counts[lo:hi]
+        trend_points.append((x(i), y(sum(window) / len(window))))
+    trend_path = "M " + " L ".join(f"{px:.1f},{py:.1f}" for px, py in trend_points)
+
+    peak = ""
+    if best_count:
+        peak_index = counts.index(best_count)
+        px, py = x(peak_index), y(best_count)
+        anchor = "middle" if plot_left + 60 < px < plot_right - 60 else ("start" if px <= plot_left + 60 else "end")
+        tx = px + (-8 if anchor == "end" else (8 if anchor == "start" else 0))
+        ty = py - 12 if py > plot_top + 26 else py + 20
+        peak = (
+            f'\n    <circle cx="{px:.1f}" cy="{py:.1f}" r="3.5" class="peak-dot" />'
+            f'\n    <text x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}" class="peak-label">{best_count} on {datetime.fromisoformat(best_date).strftime("%-d %b")}</text>'
+        )
+
+    defs = """<defs>
+    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39d353" stop-opacity="0.32" style="stop-color:var(--line)" />
+      <stop offset="1" stop-color="#39d353" stop-opacity="0" style="stop-color:var(--line)" />
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" />
+    </filter>
+  </defs>"""
+
+    legend = f"""
+    <line x1="24" y1="{height - 20}" x2="44" y2="{height - 20}" class="plot-line" />
+    <text x="50" y="{height - 16.5}" class="axis">daily contributions</text>
+    <line x1="160" y1="{height - 20}" x2="180" y2="{height - 20}" class="trend" />
+    <text x="186" y="{height - 16.5}" class="axis">7-day trend</text>
+    <text x="{width - 24}" y="{height - 16.5}" text-anchor="end" class="axis">{html.escape(contribution_breakdown(collection))}</text>"""
+
+    body = f"""  {defs}
+  {stats}
+  {grid}
+  {months}
+  <path d="{area_path}" class="area" />
+  <path d="{line_path}" class="plot-glow" filter="url(#soften)" />
+  <path d="{line_path}" class="plot-line" />
+  <path d="{trend_path}" class="trend" />{peak}{legend}"""
+
+    subtitle = f"Daily contributions · last {span_days} days · refreshes daily"
     pill = "includes private contributions" if private_ok else "public contributions only"
     return svg_shell(width, height, "Contributions", subtitle, body, pill)
 
@@ -456,8 +473,8 @@ def main() -> None:
     built_subtitle = "Own commits · original repos · default branches" if private_ok else "Own commits · original public repos · default branches"
 
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
-    (ASSET_DIR / "contributions-calendar.svg").write_text(
-        render_calendar(collection, private_ok), encoding="utf-8"
+    (ASSET_DIR / "contributions-daily.svg").write_text(
+        render_daily_chart(collection, private_ok), encoding="utf-8"
     )
     (ASSET_DIR / "current-focus.svg").write_text(
         render_card("Current focus", focus_subtitle, focus, "pushes", pill),

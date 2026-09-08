@@ -2,8 +2,8 @@
   <title id="title">Most built</title>
   <desc id="desc">Own commits · original repos · default branches</desc>
   <style>
-    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; --pill-bg:rgba(46,160,67,.15); --pill-text:#3fb950; --cell0:#161b22; --cell1:#0e4429; --cell2:#006d32; --cell3:#26a641; --cell4:#39d353; }
-    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; --pill-bg:rgba(31,136,61,.12); --pill-text:#1a7f37; --cell0:#ebedf0; --cell1:#9be9a8; --cell2:#40c463; --cell3:#30a14e; --cell4:#216e39; } }
+    :root { --bg:#0d1117; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9; --muted:#8b949e; --accent:#2f81f7; --track:#21262d; --pill-bg:rgba(46,160,67,.15); --pill-text:#3fb950; --line:#39d353; }
+    @media (prefers-color-scheme: light) { :root { --bg:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328; --muted:#656d76; --accent:#0969da; --track:#d8dee4; --pill-bg:rgba(31,136,61,.12); --pill-text:#1a7f37; --line:#1a7f37; } }
     text { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
     .title { fill:var(--title); font-size:20px; font-weight:700; }
     .subtitle,.detail,.rank,.axis { fill:var(--muted); }
@@ -17,11 +17,14 @@
     .stat-label { fill:var(--muted); font-size:11px; }
     .pill { fill:var(--pill-bg); }
     .pill-text { fill:var(--pill-text); font-size:11px; font-weight:600; }
-    .cell0 { fill:var(--cell0); }
-    .cell1 { fill:var(--cell1); }
-    .cell2 { fill:var(--cell2); }
-    .cell3 { fill:var(--cell3); }
-    .cell4 { fill:var(--cell4); }
+    .grid { stroke:var(--track); stroke-width:1; }
+    .monthline { stroke:var(--border); stroke-opacity:.35; }
+    .area { fill:url(#areaFill); }
+    .plot-glow { fill:none; stroke:var(--line); stroke-width:7; stroke-linejoin:round; stroke-linecap:round; opacity:.22; }
+    .plot-line { fill:none; stroke:var(--line); stroke-width:1.8; stroke-linejoin:round; stroke-linecap:round; }
+    .trend { fill:none; stroke:var(--accent); stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round; }
+    .peak-dot { fill:var(--line); }
+    .peak-label { fill:var(--title); font-size:11px; font-weight:600; }
 </style>
   <rect x="0.5" y="0.5" width="559" height="331" rx="12" fill="var(--bg)" stroke="var(--border)" />
   <text x="24" y="34" class="title">Most built</text>
