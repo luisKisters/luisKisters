@@ -330,7 +330,30 @@ def contribution_breakdown(collection: dict[str, Any]) -> str:
     )
 
 
-def render_daily_chart(collection: dict[str, Any], private_ok: bool) -> str:
+def weekly_buckets(days: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    buckets: list[dict[str, Any]] = []
+    current: dict[str, Any] | None = None
+    for day in days:
+        weekday = datetime.fromisoformat(day["date"]).weekday()
+        if weekday == 0 or current is None:
+            current = {"start": day["date"], "days": [], "total": 0}
+            buckets.append(current)
+        current["days"].append(day)
+        current["total"] += day["count"]
+    for bucket in buckets:
+        bucket["end"] = bucket["days"][-1]["date"]
+    return buckets
+
+
+def bar_path(x: float, y: float, w: float, h: float, r: float) -> str:
+    r = min(r, w / 2, max(1.0, h))
+    return (
+        f"M{x:.1f},{y + h:.1f} L{x:.1f},{y + r:.1f} Q{x:.1f},{y:.1f} {x + r:.1f},{y:.1f} "
+        f"L{x + w - r:.1f},{y:.1f} Q{x + w:.1f},{y:.1f} {x + w:.1f},{y + r:.1f} L{x + w:.1f},{y + h:.1f} Z"
+    )
+
+
+def render_weekly_chart(collection: dict[str, Any], private_ok: bool) -> str:
     days = calendar_days(collection)
     if not days:
         days = [{"date": collection["_to"], "count": 0}]
@@ -338,21 +361,23 @@ def render_daily_chart(collection: dict[str, Any], private_ok: bool) -> str:
     width, height = 1120, 470
     plot_left, plot_right = 64, width - 28
     plot_top, plot_bottom = 172, 386
-    counts = [day["count"] for day in days]
-    n = len(counts)
-    step = (plot_right - plot_left) / max(1, n - 1)
+    buckets = weekly_buckets(days)
+    nb = len(buckets)
+    slot = (plot_right - plot_left) / nb
+    bar_w = min(16, slot * 0.62)
+    totals = [bucket["total"] for bucket in buckets]
 
     def x(index: int) -> float:
-        return plot_left + index * step
+        return plot_left + index * slot + (slot - bar_w) / 2
 
     def y(count: float) -> float:
         return plot_bottom - (count / nice_max) * (plot_bottom - plot_top)
 
-    maximum = max(counts)
-    grid_step = next(s for s in (10, 20, 25, 50, 100, 200, 500) if maximum / s <= 4)
+    maximum = max(totals)
+    grid_step = next(s for s in (25, 50, 100, 200, 500, 1000) if maximum / s <= 4)
     nice_max = max(grid_step, -(-maximum // grid_step) * grid_step)
 
-    total = sum(counts)
+    total = sum(totals)
     longest, best_count, best_date = streak_and_peak(days)
     best_label = f"best day · {format_date(best_date + 'T00:00:00Z')}" if best_count else "best day · –"
     span_days = max(1, (datetime.fromisoformat(days[-1]["date"]) - datetime.fromisoformat(days[0]["date"])).days + 1)
@@ -380,74 +405,217 @@ def render_daily_chart(collection: dict[str, Any], private_ok: bool) -> str:
     for day in days:
         monthly[day["date"][:7]] = monthly.get(day["date"][:7], 0) + day["count"]
 
+    first_bar_of_month: dict[str, int] = {}
+    for index, bucket in enumerate(buckets):
+        first_bar_of_month.setdefault(bucket["start"][:7], index)
+
     months = ""
-    for index, day in enumerate(days):
-        date = day["date"]
-        if not date.endswith("-01"):
-            continue
-        mx = x(index)
+    for month, index in first_bar_of_month.items():
+        mx = x(index) + bar_w / 2
         months += f'\n    <line x1="{mx:.1f}" y1="{plot_top}" x2="{mx:.1f}" y2="{plot_bottom}" class="monthline" />'
         anchor = "middle"
-        if mx - 20 < plot_left:
+        if mx - 22 < plot_left:
             anchor = "start"
-        elif mx + 20 > plot_right:
+        elif mx + 22 > plot_right:
             anchor = "end"
-        label = datetime.fromisoformat(date).strftime("%b")
+        label = datetime.fromisoformat(buckets[index]["start"]).strftime("%b")
         months += f'\n    <text x="{mx:.1f}" y="{plot_bottom + 24}" text-anchor="{anchor}" class="axis" style="font-size:11px">{label}</text>'
-        months += f'\n    <text x="{mx:.1f}" y="{plot_bottom + 40}" text-anchor="{anchor}" class="axis">{monthly[date[:7]]}</text>'
+        months += f'\n    <text x="{mx:.1f}" y="{plot_bottom + 40}" text-anchor="{anchor}" class="axis">{monthly[month]}</text>'
 
-    points = " ".join(f"{x(i):.1f},{y(count):.1f}" for i, count in enumerate(counts))
-    area_path = f"M {x(0):.1f},{plot_bottom} L {points} L {x(n - 1):.1f},{plot_bottom} Z"
-    line_path = f"M {points}"
+    bars = ""
+    for index, bucket in enumerate(buckets):
+        bx, bh = x(index), y(bucket["total"])
+        if bucket["total"] > 0:
+            bars += f'<path d="{bar_path(bx, bh, bar_w, plot_bottom - bh, 3.5)}" fill="url(#barFill)" />'
+        else:
+            bars += f'<rect x="{bx:.1f}" y="{plot_bottom - 3}" width="{bar_w:.1f}" height="3" rx="1.5" class="track" />'
 
-    trend_points = []
-    for i in range(n):
-        lo, hi = max(0, i - 3), min(n, i + 4)
-        window = counts[lo:hi]
-        trend_points.append((x(i), y(sum(window) / len(window))))
-    trend_path = "M " + " L ".join(f"{px:.1f},{py:.1f}" for px, py in trend_points)
+    average_points = []
+    for index in range(nb):
+        window = totals[max(0, index - 1) : index + 3]
+        cx = x(index) + bar_w / 2
+        cy = y(sum(window) / len(window))
+        average_points.append(f"{cx:.1f},{cy:.1f}")
+    average_path = "M " + " L ".join(average_points)
 
     peak = ""
-    if best_count:
-        peak_index = counts.index(best_count)
-        px, py = x(peak_index), y(best_count)
-        anchor = "middle" if plot_left + 60 < px < plot_right - 60 else ("start" if px <= plot_left + 60 else "end")
-        tx = px + (-8 if anchor == "end" else (8 if anchor == "start" else 0))
+    peak_index = totals.index(max(totals)) if totals else 0
+    if max(totals) > 0:
+        px, py = x(peak_index) + bar_w / 2, y(totals[peak_index])
+        anchor = "middle" if plot_left + 70 < px < plot_right - 70 else ("start" if px <= plot_left + 70 else "end")
+        tx = px + (-9 if anchor == "end" else (9 if anchor == "start" else 0))
         ty = py - 12 if py > plot_top + 26 else py + 20
         peak = (
             f'\n    <circle cx="{px:.1f}" cy="{py:.1f}" r="3.5" class="peak-dot" />'
-            f'\n    <text x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}" class="peak-label">{best_count} on {datetime.fromisoformat(best_date).strftime("%-d %b")}</text>'
+            f'\n    <text x="{tx:.1f}" y="{ty:.1f}" text-anchor="{anchor}" class="peak-label">{totals[peak_index]} · wk of {datetime.fromisoformat(buckets[peak_index]["start"]).strftime("%-d %b")}</text>'
         )
 
     defs = """<defs>
-    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#39d353" stop-opacity="0.32" style="stop-color:var(--line)" />
-      <stop offset="1" stop-color="#39d353" stop-opacity="0" style="stop-color:var(--line)" />
+    <linearGradient id="barFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39d353" stop-opacity="0.95" style="stop-color:var(--line)" />
+      <stop offset="1" stop-color="#39d353" stop-opacity="0.28" style="stop-color:var(--line)" />
     </linearGradient>
-    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3.5" />
-    </filter>
   </defs>"""
 
     legend = f"""
-    <line x1="24" y1="{height - 20}" x2="44" y2="{height - 20}" class="plot-line" />
-    <text x="50" y="{height - 16.5}" class="axis">daily contributions</text>
-    <line x1="160" y1="{height - 20}" x2="180" y2="{height - 20}" class="trend" />
-    <text x="186" y="{height - 16.5}" class="axis">7-day trend</text>
-    <text x="{width - 24}" y="{height - 16.5}" text-anchor="end" class="axis">{html.escape(contribution_breakdown(collection))}</text>"""
+    <rect x="24" y="{height - 24}" width="12" height="12" rx="3" fill="url(#barFill)" />
+    <text x="42" y="{height - 14}" class="axis">weekly contributions</text>
+    <line x1="170" y1="{height - 18}" x2="190" y2="{height - 18}" class="trend" />
+    <text x="196" y="{height - 14}" class="axis">4-week average</text>
+    <text x="{width - 24}" y="{height - 14}" text-anchor="end" class="axis">{html.escape(contribution_breakdown(collection))}</text>"""
 
     body = f"""  {defs}
   {stats}
   {grid}
   {months}
-  <path d="{area_path}" class="area" />
-  <path d="{line_path}" class="plot-glow" filter="url(#soften)" />
-  <path d="{line_path}" class="plot-line" />
-  <path d="{trend_path}" class="trend" />{peak}{legend}"""
+  {bars}
+  <path d="{average_path}" class="trend" />{peak}{legend}"""
 
-    subtitle = f"Daily contributions · last {span_days} days · refreshes daily"
+    subtitle = f"Weekly contributions · last {span_days} days · refreshes daily"
     pill = "includes private contributions" if private_ok else "public contributions only"
     return svg_shell(width, height, "Contributions", subtitle, body, pill)
+
+
+def bucket_start_of(buckets: list[dict[str, Any]], index: int) -> str:
+    return buckets[index]["start"]
+
+
+def event_summary(event: dict[str, Any]) -> dict[str, Any] | None:
+    event_type = event["type"]
+    payload = event.get("payload") or {}
+    repo = event["repo"]["name"]
+    date = event["created_at"]
+    url = f"https://github.com/{repo}"
+
+    def title_of(key: str) -> str:
+        value = (payload.get(key) or {}).get("title") or ""
+        return str(value)[:90]
+
+    def described_action(action: str, what: str, title: str) -> str:
+        return f"{action} {what}: {title}" if title else f"{action} {what}"
+
+    if event_type == "PushEvent":
+        size = payload.get("distinct_size") or payload.get("size") or 0
+        text = f"pushed {size} commit{'s' if size != 1 else ''}" if size else "pushed commits"
+        kind = "push"
+    elif event_type == "PullRequestEvent":
+        text = described_action(payload.get("action", "updated"), "pull request", title_of("pull_request"))
+        kind = "pr"
+    elif event_type == "IssuesEvent":
+        text = described_action(payload.get("action", "updated"), "issue", title_of("issue"))
+        kind = "issue"
+    elif event_type == "IssueCommentEvent":
+        text = described_action("commented on", "issue", title_of("issue"))
+        kind = "issue"
+    elif event_type == "PullRequestReviewEvent":
+        text = described_action("reviewed", "pull request", title_of("pull_request"))
+        kind = "review"
+    elif event_type == "PullRequestReviewCommentEvent":
+        text = described_action("commented on review of", "pull request", title_of("pull_request"))
+        kind = "review"
+    elif event_type == "ReleaseEvent":
+        text = f"released {(payload.get('release') or {}).get('tag_name') or 'a release'}"
+        kind = "release"
+    elif event_type == "CreateEvent":
+        if payload.get("ref_type") == "repository":
+            text = "created repository"
+        else:
+            return None
+        kind = "repo"
+    else:
+        return None
+
+    return {"date": date, "kind": kind, "text": text, "repo": repo, "url": url}
+
+
+def recent_events(token: str, pages: int = 3) -> list[dict[str, Any]]:
+    events: list[dict[str, Any]] = []
+    for page in range(1, pages + 1):
+        path = query_path(f"/users/{USERNAME}/events", per_page=100, page=page)
+        try:
+            batch, _ = api_get(path, token)
+        except urllib.error.HTTPError:
+            break
+        if not batch:
+            break
+        events.extend(batch)
+    summaries = [summary for event in events if (summary := event_summary(event))]
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=90)).strftime("%Y-%m-%d")
+    return [summary for summary in summaries if summary["date"][:10] >= cutoff]
+
+
+def group_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Collapse same-day pushes to the same repo into a single feed row."""
+    grouped: list[dict[str, Any]] = []
+    index_of: dict[tuple[str, str], int] = {}
+    for event in events:
+        if event["kind"] == "push":
+            key = (event["date"][:10], event["repo"])
+            if key in index_of:
+                grouped[index_of[key]]["count"] += 1
+                continue
+            event = {**event, "count": 1}
+            index_of[key] = len(grouped)
+        grouped.append(event)
+
+    for event in grouped:
+        if event["kind"] == "push":
+            count = event["count"]
+            event["text"] = f"{count} push{'es' if count != 1 else ''}"
+    grouped.sort(key=lambda item: item["date"], reverse=True)
+    return grouped
+
+
+def build_dashboard(
+    collection: dict[str, Any],
+    focus: list[dict[str, Any]],
+    built: list[dict[str, Any]],
+    events: list[dict[str, Any]],
+    private_ok: bool,
+) -> str:
+    days = calendar_days(collection)
+    total = sum(day["count"] for day in days)
+    longest, best_count, best_date = streak_and_peak(days)
+    span_days = max(1, (datetime.fromisoformat(days[-1]["date"]) - datetime.fromisoformat(days[0]["date"])).days + 1)
+
+    monthly: dict[str, int] = {}
+    for day in days:
+        monthly[day["date"][:7]] = monthly.get(day["date"][:7], 0) + day["count"]
+
+    def with_url(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        return [
+            {**row, "url": f"https://github.com/{USERNAME}/{row['name']}"}
+            for row in rows
+        ]
+
+    payload = {
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+        "scope": "public + private" if private_ok else "public only",
+        "totals": {
+            "total": total,
+            "daily_average": round(total / span_days),
+            "longest_streak": longest,
+            "best_day": {"date": best_date, "count": best_count},
+            "commits": collection["totalCommitContributions"],
+            "pull_requests": collection["totalPullRequestContributions"],
+            "issues": collection["totalIssueContributions"],
+            "reviews": collection["totalPullRequestReviewContributions"],
+            "repos_created": collection["totalRepositoryContributions"],
+        },
+        "daily": [{"date": day["date"], "count": day["count"]} for day in days],
+        "weekly": [
+            {"start": bucket["start"], "end": bucket["end"], "total": bucket["total"]}
+            for bucket in weekly_buckets(days)
+        ],
+        "monthly": [{"month": month, "total": count} for month, count in monthly.items()],
+        "focus": with_url(focus),
+        "built": with_url(built),
+        "events": group_events(events),
+    }
+
+    data_json = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
+    template = (ROOT / "scripts" / "dashboard_template.html").read_text(encoding="utf-8")
+    return template.replace("__DATA__", data_json)
 
 
 def main() -> None:
@@ -467,14 +635,15 @@ def main() -> None:
     focus = recent_pushes(token, repo_map)
     built = most_built(token, repos)
     collection = fetch_contributions(token)
+    events = recent_events(token) if private_ok else []
 
     pill = "includes private" if private_ok else None
     focus_subtitle = f"All repos · last {RECENT_DAYS} days" if private_ok else f"Public repos · last {RECENT_DAYS} days"
     built_subtitle = "Own commits · original repos · default branches" if private_ok else "Own commits · original public repos · default branches"
 
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
-    (ASSET_DIR / "contributions-daily.svg").write_text(
-        render_daily_chart(collection, private_ok), encoding="utf-8"
+    (ASSET_DIR / "contributions-weekly.svg").write_text(
+        render_weekly_chart(collection, private_ok), encoding="utf-8"
     )
     (ASSET_DIR / "current-focus.svg").write_text(
         render_card("Current focus", focus_subtitle, focus, "pushes", pill),
@@ -482,6 +651,10 @@ def main() -> None:
     )
     (ASSET_DIR / "most-built.svg").write_text(
         render_card("Most built", built_subtitle, built, "commits", pill),
+        encoding="utf-8",
+    )
+    (ROOT / "index.html").write_text(
+        build_dashboard(collection, focus, built, events, private_ok),
         encoding="utf-8",
     )
 

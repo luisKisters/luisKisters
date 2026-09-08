@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luis Kisters · Contribution dashboard</title>
+<style>
+  :root {
+    --bg:#0d1117; --card:#161b22; --border:#30363d; --title:#f0f6fc; --text:#c9d1d9;
+    --muted:#8b949e; --accent:#2f81f7; --green:#39d353; --track:#21262d;
+    --green-soft:rgba(46,160,67,.15); --hover:rgba(177,186,196,.08);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:#ffffff; --card:#ffffff; --border:#d0d7de; --title:#1f2328; --text:#1f2328;
+      --muted:#656d76; --accent:#0969da; --green:#1a7f37; --track:#d8dee4;
+      --green-soft:rgba(31,136,61,.12); --hover:rgba(31,35,40,.05);
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:36px 20px 64px; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .head { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
+  h1 { margin:0 0 6px; font-size:26px; color:var(--title); }
+  h2 { margin:0 0 4px; font-size:16px; color:var(--title); }
+  .sub { margin:0; color:var(--muted); font-size:14px; }
+  .pill { flex-shrink:0; padding:5px 12px; border-radius:999px; font-size:12px; font-weight:600; color:var(--green); background:var(--green-soft); }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:20px; scroll-margin-top:24px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px; }
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 18px; }
+  .stat b { display:block; font-size:22px; color:var(--title); }
+  .stat span { font-size:12px; color:var(--muted); }
+  .chart-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .toggle { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .toggle button { border:0; background:none; color:var(--muted); font:inherit; font-size:12px; padding:6px 14px; cursor:pointer; }
+  .toggle button.on { background:var(--accent); color:#fff; }
+  #chart { position:relative; }
+  #chart svg { display:block; width:100%; height:auto; }
+  .tip { position:fixed; z-index:10; pointer-events:none; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--text); box-shadow:0 8px 24px rgba(0,0,0,.35); max-width:280px; }
+  .tip b { color:var(--title); }
+  .hint { margin:10px 0 0; font-size:12px; color:var(--muted); }
+  .detail { margin-top:14px; border-top:1px solid var(--border); padding-top:14px; }
+  .detail h3 { margin:0 0 8px; font-size:13px; color:var(--title); }
+  .detail ul { margin:0; padding:0; list-style:none; }
+  .detail li { padding:5px 0; font-size:13px; border-bottom:1px dashed var(--border); display:flex; gap:10px; justify-content:space-between; }
+  .detail li:last-child { border-bottom:0; }
+  .detail .when { color:var(--muted); white-space:nowrap; font-size:12px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width: 760px) { .grid { grid-template-columns:1fr; } }
+  .rows { list-style:none; margin:10px 0 0; padding:0; }
+  .rows li { margin:0; }
+  .rows a { display:grid; grid-template-columns:24px 1fr auto; gap:6px 12px; align-items:center; padding:9px 10px; border-radius:8px; color:var(--text); }
+  .rows a:hover { background:var(--hover); text-decoration:none; }
+  .rows .rank { color:var(--muted); font-size:12px; }
+  .rows .name { font-weight:600; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+  .rows .val { font-size:13px; color:var(--title); font-weight:600; white-space:nowrap; }
+  .rows .barline { grid-column:2 / span 2; display:flex; align-items:center; gap:12px; }
+  .rows .bar-track { flex:1; height:4px; border-radius:2px; background:var(--track); position:relative; overflow:hidden; }
+  .rows .bar { position:absolute; left:0; top:0; height:100%; border-radius:2px; background:var(--accent); }
+  .rows .meta { color:var(--muted); font-size:12px; white-space:nowrap; }
+  .tag { font-size:10px; font-weight:600; color:var(--green); background:var(--green-soft); border-radius:999px; padding:2px 8px; flex-shrink:0; }
+  .feed { list-style:none; margin:12px 0 0; padding:0; max-height:420px; overflow:auto; }
+  .feed li { display:flex; gap:14px; padding:9px 4px; border-bottom:1px solid var(--border); font-size:13px; align-items:baseline; }
+  .feed li:last-child { border-bottom:0; }
+  .feed .when { color:var(--muted); font-size:12px; white-space:nowrap; width:88px; flex-shrink:0; }
+  .feed .repo { color:var(--accent); font-weight:600; white-space:nowrap; }
+  .feed .kind { color:var(--green); font-size:11px; font-weight:600; width:52px; flex-shrink:0; text-transform:uppercase; letter-spacing:.4px; }
+  select { background:var(--card); color:var(--text); border:1px solid var(--border); border-radius:8px; font:inherit; font-size:12px; padding:6px 10px; }
+  footer { margin-top:28px; color:var(--muted); font-size:12px; text-align:center; }
+  .axis { font-size:10px; fill:var(--muted); }
+  .gline { stroke:var(--track); }
+  .mline { stroke:var(--border); stroke-opacity:.4; }
+  .zero { fill:var(--track); }
+  .avg { fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; }
+</style>
+</head>
+<body>
+<main>
+  <header class="head">
+    <div>
+      <h1>Contribution dashboard</h1>
+      <p class="sub">Luis Kisters · github.com/luisKisters · last 12 months</p>
+    </div>
+    <span class="pill" id="pill"></span>
+  </header>
+
+  <section class="stats" id="stats"></section>
+
+  <section class="card" id="chart-card">
+    <div class="chart-head">
+      <h2>Activity</h2>
+      <div class="toggle" id="toggle">
+        <button data-view="weekly" class="on">Weekly</button>
+        <button data-view="daily">Daily</button>
+      </div>
+    </div>
+    <div id="chart"></div>
+    <p class="hint" id="chart-hint"></p>
+    <div id="detail" class="detail" hidden></div>
+  </section>
+
+  <section class="grid">
+    <div class="card" id="focus">
+      <h2>Current focus</h2>
+      <p class="sub">Pushes over the last 30 days</p>
+      <ul class="rows" id="focus-rows"></ul>
+    </div>
+    <div class="card" id="built">
+      <h2>Most built</h2>
+      <p class="sub">Own commits · original repos · default branches</p>
+      <ul class="rows" id="built-rows"></ul>
+    </div>
+  </section>
+
+  <section class="card" id="activity">
+    <div class="chart-head">
+      <h2>Recent activity</h2>
+      <select id="filter"><option value="">All repos</option></select>
+    </div>
+    <ul class="feed" id="feed"></ul>
+  </section>
+
+  <footer>Auto-refreshes daily · generated <span id="gen"></span></footer>
+</main>
+
+<script>
+const DATA = {"generated_at": "2026-09-08 23:49 UTC", "scope": "public + private", "totals": {"total": 2550, "daily_average": 7, "longest_streak": 19, "best_day": {"date": "2026-06-11", "count": 148}, "commits": 483, "pull_requests": 33, "issues": 8, "reviews": 0, "repos_created": 26}, "daily": [{"date": "2025-09-08", "count": 2}, {"date": "2025-09-09", "count": 3}, {"date": "2025-09-10", "count": 0}, {"date": "2025-09-11", "count": 0}, {"date": "2025-09-12", "count": 6}, {"date": "2025-09-13", "count": 0}, {"date": "2025-09-14", "count": 0}, {"date": "2025-09-15", "count": 0}, {"date": "2025-09-16", "count": 0}, {"date": "2025-09-17", "count": 2}, {"date": "2025-09-18", "count": 1}, {"date": "2025-09-19", "count": 3}, {"date": "2025-09-20", "count": 0}, {"date": "2025-09-21", "count": 0}, {"date": "2025-09-22", "count": 0}, {"date": "2025-09-23", "count": 4}, {"date": "2025-09-24", "count": 2}, {"date": "2025-09-25", "count": 0}, {"date": "2025-09-26", "count": 0}, {"date": "2025-09-27", "count": 0}, {"date": "2025-09-28", "count": 5}, {"date": "2025-09-29", "count": 0}, {"date": "2025-09-30", "count": 1}, {"date": "2025-10-01", "count": 0}, {"date": "2025-10-02", "count": 3}, {"date": "2025-10-03", "count": 14}, {"date": "2025-10-04", "count": 0}, {"date": "2025-10-05", "count": 1}, {"date": "2025-10-06", "count": 4}, {"date": "2025-10-07", "count": 0}, {"date": "2025-10-08", "count": 2}, {"date": "2025-10-09", "count": 0}, {"date": "2025-10-10", "count": 0}, {"date": "2025-10-11", "count": 0}, {"date": "2025-10-12", "count": 0}, {"date": "2025-10-13", "count": 0}, {"date": "2025-10-14", "count": 0}, {"date": "2025-10-15", "count": 0}, {"date": "2025-10-16", "count": 0}, {"date": "2025-10-17", "count": 0}, {"date": "2025-10-18", "count": 0}, {"date": "2025-10-19", "count": 0}, {"date": "2025-10-20", "count": 0}, {"date": "2025-10-21", "count": 0}, {"date": "2025-10-22", "count": 0}, {"date": "2025-10-23", "count": 0}, {"date": "2025-10-24", "count": 0}, {"date": "2025-10-25", "count": 1}, {"date": "2025-10-26", "count": 0}, {"date": "2025-10-27", "count": 0}, {"date": "2025-10-28", "count": 0}, {"date": "2025-10-29", "count": 0}, {"date": "2025-10-30", "count": 0}, {"date": "2025-10-31", "count": 0}, {"date": "2025-11-01", "count": 0}, {"date": "2025-11-02", "count": 0}, {"date": "2025-11-03", "count": 0}, {"date": "2025-11-04", "count": 0}, {"date": "2025-11-05", "count": 0}, {"date": "2025-11-06", "count": 0}, {"date": "2025-11-07", "count": 0}, {"date": "2025-11-08", "count": 0}, {"date": "2025-11-09", "count": 0}, {"date": "2025-11-10", "count": 0}, {"date": "2025-11-11", "count": 0}, {"date": "2025-11-12", "count": 0}, {"date": "2025-11-13", "count": 0}, {"date": "2025-11-14", "count": 0}, {"date": "2025-11-15", "count": 0}, {"date": "2025-11-16", "count": 0}, {"date": "2025-11-17", "count": 0}, {"date": "2025-11-18", "count": 0}, {"date": "2025-11-19", "count": 0}, {"date": "2025-11-20", "count": 0}, {"date": "2025-11-21", "count": 0}, {"date": "2025-11-22", "count": 0}, {"date": "2025-11-23", "count": 0}, {"date": "2025-11-24", "count": 0}, {"date": "2025-11-25", "count": 0}, {"date": "2025-11-26", "count": 0}, {"date": "2025-11-27", "count": 0}, {"date": "2025-11-28", "count": 0}, {"date": "2025-11-29", "count": 0}, {"date": "2025-11-30", "count": 0}, {"date": "2025-12-01", "count": 0}, {"date": "2025-12-02", "count": 0}, {"date": "2025-12-03", "count": 0}, {"date": "2025-12-04", "count": 0}, {"date": "2025-12-05", "count": 0}, {"date": "2025-12-06", "count": 3}, {"date": "2025-12-07", "count": 4}, {"date": "2025-12-08", "count": 0}, {"date": "2025-12-09", "count": 6}, {"date": "2025-12-10", "count": 0}, {"date": "2025-12-11", "count": 2}, {"date": "2025-12-12", "count": 1}, {"date": "2025-12-13", "count": 4}, {"date": "2025-12-14", "count": 2}, {"date": "2025-12-15", "count": 0}, {"date": "2025-12-16", "count": 4}, {"date": "2025-12-17", "count": 26}, {"date": "2025-12-18", "count": 0}, {"date": "2025-12-19", "count": 0}, {"date": "2025-12-20", "count": 2}, {"date": "2025-12-21", "count": 0}, {"date": "2025-12-22", "count": 8}, {"date": "2025-12-23", "count": 0}, {"date": "2025-12-24", "count": 4}, {"date": "2025-12-25", "count": 0}, {"date": "2025-12-26", "count": 0}, {"date": "2025-12-27", "count": 0}, {"date": "2025-12-28", "count": 0}, {"date": "2025-12-29", "count": 12}, {"date": "2025-12-30", "count": 39}, {"date": "2025-12-31", "count": 4}, {"date": "2026-01-01", "count": 8}, {"date": "2026-01-02", "count": 0}, {"date": "2026-01-03", "count": 0}, {"date": "2026-01-04", "count": 0}, {"date": "2026-01-05", "count": 8}, {"date": "2026-01-06", "count": 0}, {"date": "2026-01-07", "count": 0}, {"date": "2026-01-08", "count": 0}, {"date": "2026-01-09", "count": 0}, {"date": "2026-01-10", "count": 2}, {"date": "2026-01-11", "count": 15}, {"date": "2026-01-12", "count": 0}, {"date": "2026-01-13", "count": 0}, {"date": "2026-01-14", "count": 0}, {"date": "2026-01-15", "count": 12}, {"date": "2026-01-16", "count": 0}, {"date": "2026-01-17", "count": 0}, {"date": "2026-01-18", "count": 2}, {"date": "2026-01-19", "count": 0}, {"date": "2026-01-20", "count": 0}, {"date": "2026-01-21", "count": 0}, {"date": "2026-01-22", "count": 0}, {"date": "2026-01-23", "count": 0}, {"date": "2026-01-24", "count": 0}, {"date": "2026-01-25", "count": 0}, {"date": "2026-01-26", "count": 10}, {"date": "2026-01-27", "count": 0}, {"date": "2026-01-28", "count": 0}, {"date": "2026-01-29", "count": 0}, {"date": "2026-01-30", "count": 0}, {"date": "2026-01-31", "count": 0}, {"date": "2026-02-01", "count": 0}, {"date": "2026-02-02", "count": 0}, {"date": "2026-02-03", "count": 4}, {"date": "2026-02-04", "count": 0}, {"date": "2026-02-05", "count": 0}, {"date": "2026-02-06", "count": 0}, {"date": "2026-02-07", "count": 0}, {"date": "2026-02-08", "count": 0}, {"date": "2026-02-09", "count": 0}, {"date": "2026-02-10", "count": 0}, {"date": "2026-02-11", "count": 0}, {"date": "2026-02-12", "count": 14}, {"date": "2026-02-13", "count": 4}, {"date": "2026-02-14", "count": 0}, {"date": "2026-02-15", "count": 0}, {"date": "2026-02-16", "count": 0}, {"date": "2026-02-17", "count": 0}, {"date": "2026-02-18", "count": 0}, {"date": "2026-02-19", "count": 0}, {"date": "2026-02-20", "count": 0}, {"date": "2026-02-21", "count": 0}, {"date": "2026-02-22", "count": 0}, {"date": "2026-02-23", "count": 0}, {"date": "2026-02-24", "count": 0}, {"date": "2026-02-25", "count": 0}, {"date": "2026-02-26", "count": 1}, {"date": "2026-02-27", "count": 0}, {"date": "2026-02-28", "count": 0}, {"date": "2026-03-01", "count": 6}, {"date": "2026-03-02", "count": 6}, {"date": "2026-03-03", "count": 0}, {"date": "2026-03-04", "count": 0}, {"date": "2026-03-05", "count": 1}, {"date": "2026-03-06", "count": 0}, {"date": "2026-03-07", "count": 3}, {"date": "2026-03-08", "count": 0}, {"date": "2026-03-09", "count": 7}, {"date": "2026-03-10", "count": 0}, {"date": "2026-03-11", "count": 0}, {"date": "2026-03-12", "count": 0}, {"date": "2026-03-13", "count": 0}, {"date": "2026-03-14", "count": 0}, {"date": "2026-03-15", "count": 0}, {"date": "2026-03-16", "count": 0}, {"date": "2026-03-17", "count": 22}, {"date": "2026-03-18", "count": 4}, {"date": "2026-03-19", "count": 0}, {"date": "2026-03-20", "count": 0}, {"date": "2026-03-21", "count": 0}, {"date": "2026-03-22", "count": 0}, {"date": "2026-03-23", "count": 0}, {"date": "2026-03-24", "count": 3}, {"date": "2026-03-25", "count": 1}, {"date": "2026-03-26", "count": 0}, {"date": "2026-03-27", "count": 0}, {"date": "2026-03-28", "count": 0}, {"date": "2026-03-29", "count": 0}, {"date": "2026-03-30", "count": 0}, {"date": "2026-03-31", "count": 0}, {"date": "2026-04-01", "count": 0}, {"date": "2026-04-02", "count": 0}, {"date": "2026-04-03", "count": 0}, {"date": "2026-04-04", "count": 0}, {"date": "2026-04-05", "count": 0}, {"date": "2026-04-06", "count": 0}, {"date": "2026-04-07", "count": 0}, {"date": "2026-04-08", "count": 0}, {"date": "2026-04-09", "count": 0}, {"date": "2026-04-10", "count": 0}, {"date": "2026-04-11", "count": 23}, {"date": "2026-04-12", "count": 8}, {"date": "2026-04-13", "count": 1}, {"date": "2026-04-14", "count": 0}, {"date": "2026-04-15", "count": 16}, {"date": "2026-04-16", "count": 0}, {"date": "2026-04-17", "count": 0}, {"date": "2026-04-18", "count": 12}, {"date": "2026-04-19", "count": 0}, {"date": "2026-04-20", "count": 0}, {"date": "2026-04-21", "count": 0}, {"date": "2026-04-22", "count": 4}, {"date": "2026-04-23", "count": 9}, {"date": "2026-04-24", "count": 2}, {"date": "2026-04-25", "count": 6}, {"date": "2026-04-26", "count": 0}, {"date": "2026-04-27", "count": 0}, {"date": "2026-04-28", "count": 0}, {"date": "2026-04-29", "count": 0}, {"date": "2026-04-30", "count": 0}, {"date": "2026-05-01", "count": 1}, {"date": "2026-05-02", "count": 0}, {"date": "2026-05-03", "count": 0}, {"date": "2026-05-04", "count": 7}, {"date": "2026-05-05", "count": 0}, {"date": "2026-05-06", "count": 0}, {"date": "2026-05-07", "count": 0}, {"date": "2026-05-08", "count": 0}, {"date": "2026-05-09", "count": 0}, {"date": "2026-05-10", "count": 0}, {"date": "2026-05-11", "count": 1}, {"date": "2026-05-12", "count": 3}, {"date": "2026-05-13", "count": 4}, {"date": "2026-05-14", "count": 4}, {"date": "2026-05-15", "count": 37}, {"date": "2026-05-16", "count": 7}, {"date": "2026-05-17", "count": 10}, {"date": "2026-05-18", "count": 1}, {"date": "2026-05-19", "count": 0}, {"date": "2026-05-20", "count": 1}, {"date": "2026-05-21", "count": 6}, {"date": "2026-05-22", "count": 12}, {"date": "2026-05-23", "count": 5}, {"date": "2026-05-24", "count": 1}, {"date": "2026-05-25", "count": 1}, {"date": "2026-05-26", "count": 0}, {"date": "2026-05-27", "count": 3}, {"date": "2026-05-28", "count": 3}, {"date": "2026-05-29", "count": 1}, {"date": "2026-05-30", "count": 0}, {"date": "2026-05-31", "count": 1}, {"date": "2026-06-01", "count": 4}, {"date": "2026-06-02", "count": 2}, {"date": "2026-06-03", "count": 20}, {"date": "2026-06-04", "count": 37}, {"date": "2026-06-05", "count": 9}, {"date": "2026-06-06", "count": 29}, {"date": "2026-06-07", "count": 9}, {"date": "2026-06-08", "count": 84}, {"date": "2026-06-09", "count": 20}, {"date": "2026-06-10", "count": 95}, {"date": "2026-06-11", "count": 148}, {"date": "2026-06-12", "count": 5}, {"date": "2026-06-13", "count": 31}, {"date": "2026-06-14", "count": 34}, {"date": "2026-06-15", "count": 11}, {"date": "2026-06-16", "count": 4}, {"date": "2026-06-17", "count": 3}, {"date": "2026-06-18", "count": 3}, {"date": "2026-06-19", "count": 0}, {"date": "2026-06-20", "count": 8}, {"date": "2026-06-21", "count": 0}, {"date": "2026-06-22", "count": 0}, {"date": "2026-06-23", "count": 6}, {"date": "2026-06-24", "count": 0}, {"date": "2026-06-25", "count": 4}, {"date": "2026-06-26", "count": 12}, {"date": "2026-06-27", "count": 0}, {"date": "2026-06-28", "count": 9}, {"date": "2026-06-29", "count": 7}, {"date": "2026-06-30", "count": 0}, {"date": "2026-07-01", "count": 0}, {"date": "2026-07-02", "count": 0}, {"date": "2026-07-03", "count": 3}, {"date": "2026-07-04", "count": 66}, {"date": "2026-07-05", "count": 22}, {"date": "2026-07-06", "count": 0}, {"date": "2026-07-07", "count": 0}, {"date": "2026-07-08", "count": 0}, {"date": "2026-07-09", "count": 3}, {"date": "2026-07-10", "count": 86}, {"date": "2026-07-11", "count": 70}, {"date": "2026-07-12", "count": 124}, {"date": "2026-07-13", "count": 18}, {"date": "2026-07-14", "count": 0}, {"date": "2026-07-15", "count": 0}, {"date": "2026-07-16", "count": 0}, {"date": "2026-07-17", "count": 15}, {"date": "2026-07-18", "count": 1}, {"date": "2026-07-19", "count": 5}, {"date": "2026-07-20", "count": 38}, {"date": "2026-07-21", "count": 59}, {"date": "2026-07-22", "count": 1}, {"date": "2026-07-23", "count": 12}, {"date": "2026-07-24", "count": 62}, {"date": "2026-07-25", "count": 1}, {"date": "2026-07-26", "count": 0}, {"date": "2026-07-27", "count": 2}, {"date": "2026-07-28", "count": 3}, {"date": "2026-07-29", "count": 16}, {"date": "2026-07-30", "count": 14}, {"date": "2026-07-31", "count": 87}, {"date": "2026-08-01", "count": 0}, {"date": "2026-08-02", "count": 12}, {"date": "2026-08-03", "count": 31}, {"date": "2026-08-04", "count": 34}, {"date": "2026-08-05", "count": 45}, {"date": "2026-08-06", "count": 37}, {"date": "2026-08-07", "count": 37}, {"date": "2026-08-08", "count": 23}, {"date": "2026-08-09", "count": 61}, {"date": "2026-08-10", "count": 83}, {"date": "2026-08-11", "count": 13}, {"date": "2026-08-12", "count": 4}, {"date": "2026-08-13", "count": 0}, {"date": "2026-08-14", "count": 57}, {"date": "2026-08-15", "count": 12}, {"date": "2026-08-16", "count": 30}, {"date": "2026-08-17", "count": 65}, {"date": "2026-08-18", "count": 23}, {"date": "2026-08-19", "count": 11}, {"date": "2026-08-20", "count": 34}, {"date": "2026-08-21", "count": 4}, {"date": "2026-08-22", "count": 14}, {"date": "2026-08-23", "count": 0}, {"date": "2026-08-24", "count": 30}, {"date": "2026-08-25", "count": 2}, {"date": "2026-08-26", "count": 3}, {"date": "2026-08-27", "count": 3}, {"date": "2026-08-28", "count": 3}, {"date": "2026-08-29", "count": 0}, {"date": "2026-08-30", "count": 4}, {"date": "2026-08-31", "count": 33}, {"date": "2026-09-01", "count": 3}, {"date": "2026-09-02", "count": 3}, {"date": "2026-09-03", "count": 2}, {"date": "2026-09-04", "count": 12}, {"date": "2026-09-05", "count": 4}, {"date": "2026-09-06", "count": 12}, {"date": "2026-09-07", "count": 2}, {"date": "2026-09-08", "count": 4}], "weekly": [{"start": "2025-09-08", "end": "2025-09-14", "total": 11}, {"start": "2025-09-15", "end": "2025-09-21", "total": 6}, {"start": "2025-09-22", "end": "2025-09-28", "total": 11}, {"start": "2025-09-29", "end": "2025-10-05", "total": 19}, {"start": "2025-10-06", "end": "2025-10-12", "total": 6}, {"start": "2025-10-13", "end": "2025-10-19", "total": 0}, {"start": "2025-10-20", "end": "2025-10-26", "total": 1}, {"start": "2025-10-27", "end": "2025-11-02", "total": 0}, {"start": "2025-11-03", "end": "2025-11-09", "total": 0}, {"start": "2025-11-10", "end": "2025-11-16", "total": 0}, {"start": "2025-11-17", "end": "2025-11-23", "total": 0}, {"start": "2025-11-24", "end": "2025-11-30", "total": 0}, {"start": "2025-12-01", "end": "2025-12-07", "total": 7}, {"start": "2025-12-08", "end": "2025-12-14", "total": 15}, {"start": "2025-12-15", "end": "2025-12-21", "total": 32}, {"start": "2025-12-22", "end": "2025-12-28", "total": 12}, {"start": "2025-12-29", "end": "2026-01-04", "total": 63}, {"start": "2026-01-05", "end": "2026-01-11", "total": 25}, {"start": "2026-01-12", "end": "2026-01-18", "total": 14}, {"start": "2026-01-19", "end": "2026-01-25", "total": 0}, {"start": "2026-01-26", "end": "2026-02-01", "total": 10}, {"start": "2026-02-02", "end": "2026-02-08", "total": 4}, {"start": "2026-02-09", "end": "2026-02-15", "total": 18}, {"start": "2026-02-16", "end": "2026-02-22", "total": 0}, {"start": "2026-02-23", "end": "2026-03-01", "total": 7}, {"start": "2026-03-02", "end": "2026-03-08", "total": 10}, {"start": "2026-03-09", "end": "2026-03-15", "total": 7}, {"start": "2026-03-16", "end": "2026-03-22", "total": 26}, {"start": "2026-03-23", "end": "2026-03-29", "total": 4}, {"start": "2026-03-30", "end": "2026-04-05", "total": 0}, {"start": "2026-04-06", "end": "2026-04-12", "total": 31}, {"start": "2026-04-13", "end": "2026-04-19", "total": 29}, {"start": "2026-04-20", "end": "2026-04-26", "total": 21}, {"start": "2026-04-27", "end": "2026-05-03", "total": 1}, {"start": "2026-05-04", "end": "2026-05-10", "total": 7}, {"start": "2026-05-11", "end": "2026-05-17", "total": 66}, {"start": "2026-05-18", "end": "2026-05-24", "total": 26}, {"start": "2026-05-25", "end": "2026-05-31", "total": 9}, {"start": "2026-06-01", "end": "2026-06-07", "total": 110}, {"start": "2026-06-08", "end": "2026-06-14", "total": 417}, {"start": "2026-06-15", "end": "2026-06-21", "total": 29}, {"start": "2026-06-22", "end": "2026-06-28", "total": 31}, {"start": "2026-06-29", "end": "2026-07-05", "total": 98}, {"start": "2026-07-06", "end": "2026-07-12", "total": 283}, {"start": "2026-07-13", "end": "2026-07-19", "total": 39}, {"start": "2026-07-20", "end": "2026-07-26", "total": 173}, {"start": "2026-07-27", "end": "2026-08-02", "total": 134}, {"start": "2026-08-03", "end": "2026-08-09", "total": 268}, {"start": "2026-08-10", "end": "2026-08-16", "total": 199}, {"start": "2026-08-17", "end": "2026-08-23", "total": 151}, {"start": "2026-08-24", "end": "2026-08-30", "total": 45}, {"start": "2026-08-31", "end": "2026-09-06", "total": 69}, {"start": "2026-09-07", "end": "2026-09-08", "total": 6}], "monthly": [{"month": "2025-09", "total": 29}, {"month": "2025-10", "total": 25}, {"month": "2025-11", "total": 0}, {"month": "2025-12", "total": 121}, {"month": "2026-01", "total": 57}, {"month": "2026-02", "total": 23}, {"month": "2026-03", "total": 53}, {"month": "2026-04", "total": 81}, {"month": "2026-05", "total": 109}, {"month": "2026-06", "total": 594}, {"month": "2026-07", "total": 708}, {"month": "2026-08", "total": 708}, {"month": "2026-09", "total": 42}], "focus": [{"name": "notetakr", "value": 116, "detail": "8 Sep 2026", "private": true, "url": "https://github.com/luisKisters/notetakr"}, {"name": "Listnr", "value": 31, "detail": "1 Sep 2026", "private": false, "url": "https://github.com/luisKisters/Listnr"}, {"name": "skills", "value": 4, "detail": "26 Aug 2026", "private": false, "url": "https://github.com/luisKisters/skills"}, {"name": "anchr", "value": 2, "detail": "27 Aug 2026", "private": false, "url": "https://github.com/luisKisters/anchr"}], "built": [{"name": "notetakr", "value": 782, "detail": "7 Sep 2026", "private": true, "url": "https://github.com/luisKisters/notetakr"}, {"name": "summario", "value": 316, "detail": "13 Jul 2026", "private": true, "url": "https://github.com/luisKisters/summario"}, {"name": "model-releases-bot", "value": 83, "detail": "27 Jul 2026", "private": false, "url": "https://github.com/luisKisters/model-releases-bot"}, {"name": "bahnhofjaeger", "value": 74, "detail": "6 Dec 2025", "private": false, "url": "https://github.com/luisKisters/bahnhofjaeger"}, {"name": "summaryApp", "value": 66, "detail": "11 May 2023", "private": false, "url": "https://github.com/luisKisters/summaryApp"}], "events": [{"date": "2026-09-08T07:31:51Z", "kind": "push", "text": "3 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 3}, {"date": "2026-09-08T07:27:57Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-08T02:08:58Z", "kind": "release", "text": "released nightly-v1.0-20260908020601", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-07T23:23:38Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-07T12:08:10Z", "kind": "issue", "text": "opened issue: i love this app but would like to make some changes, mind if i make a few PRs or one big P", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-07T08:52:48Z", "kind": "push", "text": "11 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 11}, {"date": "2026-09-07T08:52:47Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-07T00:03:23Z", "kind": "pr", "text": "merged pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:56Z", "kind": "review", "text": "commented on review of pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:56Z", "kind": "review", "text": "reviewed pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:55Z", "kind": "review", "text": "commented on review of pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:55Z", "kind": "review", "text": "reviewed pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:54Z", "kind": "review", "text": "reviewed pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:53Z", "kind": "review", "text": "commented on review of pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T21:45:43Z", "kind": "push", "text": "2 pushes", "repo": "luisKisters/nootch", "url": "https://github.com/luisKisters/nootch", "count": 2}, {"date": "2026-09-06T20:36:44Z", "kind": "pr", "text": "labeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T20:34:41Z", "kind": "pr", "text": "unlabeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T20:32:41Z", "kind": "pr", "text": "labeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T20:20:34Z", "kind": "push", "text": "16 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 16}, {"date": "2026-09-06T20:11:16Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T20:10:51Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T19:55:05Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T17:18:08Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T17:15:41Z", "kind": "release", "text": "released v1.0-20260906170745", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-06T15:27:22Z", "kind": "issue", "text": "commented on issue: Fix launch crash from Bundle.module and the endless Keychain prompts", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T13:32:17Z", "kind": "issue", "text": "commented on issue: 1.0.4 crashes on launch on every machine (resource bundle path) + repeated keychain passwo", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T13:32:10Z", "kind": "pr", "text": "opened pull request", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T13:25:31Z", "kind": "issue", "text": "commented on issue: 1.0.4 crashes on launch on every machine (resource bundle path) + repeated keychain passwo", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T13:10:59Z", "kind": "issue", "text": "commented on issue: 1.0.4 crashes on launch on every machine (resource bundle path) + repeated keychain passwo", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-06T11:31:17Z", "kind": "issue", "text": "opened issue: 1.0.4 crashes on launch on every machine (resource bundle path) + repeated keychain passwo", "repo": "DeepanshuMishraa/nootch", "url": "https://github.com/DeepanshuMishraa/nootch"}, {"date": "2026-09-05T21:15:23Z", "kind": "push", "text": "21 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 21}, {"date": "2026-09-05T20:48:21Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-05T19:32:06Z", "kind": "push", "text": "1 push", "repo": "luisKisters/swift-markdown-engine", "url": "https://github.com/luisKisters/swift-markdown-engine", "count": 1}, {"date": "2026-09-05T14:13:32Z", "kind": "issue", "text": "commented on issue: fix: reopen the last note on launch, select the current meeting in ⌘K, one symbol per row", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-05T14:13:31Z", "kind": "issue", "text": "commented on issue: fix: clear panel hover under overlays and render the Glass blur from the panel content vie", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-05T14:13:29Z", "kind": "issue", "text": "commented on issue: fix: adopt the calendar event title when linking an event", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-05T14:12:50Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-05T01:25:49Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T16:09:55Z", "kind": "push", "text": "24 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 24}, {"date": "2026-09-04T14:49:02Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T14:36:18Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T14:36:12Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T13:52:52Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T13:35:07Z", "kind": "push", "text": "1 push", "repo": "luisKisters/swift-markdown-engine", "url": "https://github.com/luisKisters/swift-markdown-engine", "count": 1}, {"date": "2026-09-04T13:32:58Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T13:32:26Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-04T13:32:12Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-03T19:14:19Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-03T02:06:51Z", "kind": "push", "text": "1 push", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 1}, {"date": "2026-09-03T02:06:40Z", "kind": "release", "text": "released nightly-v1.0-20260903020234", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-02T20:31:02Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-02T12:57:25Z", "kind": "push", "text": "2 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 2}, {"date": "2026-09-02T12:57:24Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-09-01T18:23:28Z", "kind": "push", "text": "1 push", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr", "count": 1}, {"date": "2026-09-01T18:23:27Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-09-01T18:23:12Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-09-01T02:08:19Z", "kind": "push", "text": "1 push", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 1}, {"date": "2026-09-01T02:08:02Z", "kind": "release", "text": "released nightly-v1.0-20260901020529", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-31T19:42:38Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-31T19:38:24Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-31T18:10:08Z", "kind": "push", "text": "4 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 4}, {"date": "2026-08-31T16:50:49Z", "kind": "push", "text": "12 pushes", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr", "count": 12}, {"date": "2026-08-31T16:44:07Z", "kind": "issue", "text": "commented on issue: Mockups and plan for scan-to-position", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-31T16:34:00Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-31T16:22:09Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-31T12:59:29Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-30T16:17:31Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-30T16:17:21Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-30T16:05:29Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-28T08:38:06Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-28T07:08:34Z", "kind": "push", "text": "1 push", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 1}, {"date": "2026-08-27T18:55:47Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/anchr", "url": "https://github.com/luisKisters/anchr"}, {"date": "2026-08-27T18:53:11Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/anchr", "url": "https://github.com/luisKisters/anchr"}, {"date": "2026-08-27T18:52:53Z", "kind": "push", "text": "2 pushes", "repo": "luisKisters/anchr", "url": "https://github.com/luisKisters/anchr", "count": 2}, {"date": "2026-08-26T00:24:11Z", "kind": "push", "text": "1 push", "repo": "luisKisters/skills", "url": "https://github.com/luisKisters/skills", "count": 1}, {"date": "2026-08-25T17:56:43Z", "kind": "pr", "text": "unlabeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-25T17:07:38Z", "kind": "pr", "text": "labeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-25T17:07:31Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-25T10:04:14Z", "kind": "push", "text": "1 push", "repo": "luisKisters/skills", "url": "https://github.com/luisKisters/skills", "count": 1}, {"date": "2026-08-24T17:22:06Z", "kind": "push", "text": "8 pushes", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr", "count": 8}, {"date": "2026-08-24T15:58:39Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-24T15:08:18Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-24T14:54:30Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-24T14:05:09Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-24T14:04:59Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-24T00:21:25Z", "kind": "push", "text": "1 push", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 1}, {"date": "2026-08-22T08:06:12Z", "kind": "push", "text": "7 pushes", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr", "count": 7}, {"date": "2026-08-22T08:06:11Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-22T00:54:44Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr"}, {"date": "2026-08-21T23:47:54Z", "kind": "push", "text": "3 pushes", "repo": "luisKisters/Listnr", "url": "https://github.com/luisKisters/Listnr", "count": 3}, {"date": "2026-08-21T00:59:12Z", "kind": "push", "text": "2 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 2}, {"date": "2026-08-20T21:34:19Z", "kind": "push", "text": "22 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 22}, {"date": "2026-08-20T17:34:44Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T17:26:23Z", "kind": "pr", "text": "unlabeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T17:05:51Z", "kind": "pr", "text": "labeled pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T17:05:08Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T14:50:26Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T12:05:43Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T12:02:58Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T12:00:59Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T02:08:18Z", "kind": "release", "text": "released nightly-v1.0-20260820020532", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T00:55:41Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-20T00:08:35Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-19T23:33:48Z", "kind": "push", "text": "3 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 3}, {"date": "2026-08-19T14:39:16Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/skills", "url": "https://github.com/luisKisters/skills"}, {"date": "2026-08-19T14:38:34Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/skills", "url": "https://github.com/luisKisters/skills"}, {"date": "2026-08-19T14:38:14Z", "kind": "push", "text": "2 pushes", "repo": "luisKisters/skills", "url": "https://github.com/luisKisters/skills", "count": 2}, {"date": "2026-08-18T01:51:38Z", "kind": "push", "text": "4 pushes", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr", "count": 4}, {"date": "2026-08-18T01:51:13Z", "kind": "release", "text": "released nightly-v1.0-20260818014843", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-18T01:40:06Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-18T01:24:31Z", "kind": "pr", "text": "opened pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-18T01:17:33Z", "kind": "release", "text": "released nightly-v1.0-20260818011441", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}, {"date": "2026-08-18T01:05:48Z", "kind": "pr", "text": "merged pull request", "repo": "luisKisters/notetakr", "url": "https://github.com/luisKisters/notetakr"}]};
+</script>
+<script>
+"use strict";
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => n.toLocaleString("en-US");
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const KIND_LABEL = { push:"push", pr:"pr", issue:"issue", review:"review", release:"rel", repo:"repo" };
+const EVENTS_BY_DAY = {};
+DATA.events.forEach((e) => {
+  const d = e.date.slice(0, 10);
+  (EVENTS_BY_DAY[d] = EVENTS_BY_DAY[d] || []).push(e);
+});
+
+$("pill").textContent = DATA.scope === "public + private" ? "includes private contributions" : "public contributions only";
+$("gen").textContent = DATA.generated_at;
+
+$("stats").innerHTML = [
+  [fmt(DATA.totals.total), "contributions"],
+  [String(DATA.totals.daily_average), "daily average"],
+  [DATA.totals.longest_streak + " days", "longest streak"],
+  [String(DATA.totals.best_day.count), "best day · " + prettyDate(DATA.totals.best_day.date)]
+].map(([v, l]) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
+
+function prettyDate(iso) {
+  const d = new Date(iso + "T00:00:00Z");
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+function shortDate(iso) {
+  const d = new Date(iso + "T00:00:00Z");
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
+}
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+
+const CHART_W = 1000, CHART_H = 260, PAD_L = 44, PAD_R = 12, PAD_T = 16, PAD_B = 42;
+const PLOT_W = CHART_W - PAD_L - PAD_R, PLOT_H = CHART_H - PAD_T - PAD_B;
+let view = "weekly";
+let selection = null;
+
+function niceScale(max) {
+  const step = [10, 20, 25, 50, 100, 200, 500, 1000].find((s) => max / s <= 4) || 1000;
+  return { step, top: Math.max(step, Math.ceil(max / step) * step) };
+}
+function monthLabelPos(rows) {
+  const seen = {};
+  const out = {};
+  rows.forEach((r, i) => {
+    const m = (r.start || r.date).slice(0, 7);
+    if (!(m in seen)) seen[m] = i;
+  });
+  return seen;
+}
+
+const tip = document.createElement("div");
+tip.className = "tip";
+tip.hidden = true;
+document.body.appendChild(tip);
+
+function renderChart() {
+  const rows = view === "weekly" ? DATA.weekly : DATA.daily;
+  const values = rows.map((r) => r.total != null ? r.total : r.count);
+  const max = Math.max(...values, 1);
+  const { step, top } = niceScale(max);
+  const slot = PLOT_W / rows.length;
+  const bw = view === "weekly" ? Math.min(16, slot * 0.62) : Math.max(1.5, slot * 0.55);
+  const y = (v) => PAD_T + PLOT_H - (v / top) * PLOT_H;
+  const cx = (i) => PAD_L + i * slot + slot / 2;
+
+  let svg = `<svg viewBox="0 0 ${CHART_W} ${CHART_H}" role="img" aria-label="contribution chart">`;
+  svg += `<defs><linearGradient id="bfill" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="var(--green)" stop-opacity="0.95"/>
+    <stop offset="1" stop-color="var(--green)" stop-opacity="0.3"/></linearGradient></defs>`;
+  for (let t = 0; t <= top; t += step) {
+    svg += `<line x1="${PAD_L}" y1="${y(t)}" x2="${CHART_W - PAD_R}" y2="${y(t)}" class="gline"/>`;
+    svg += `<text x="${PAD_L - 8}" y="${y(t) + 3.5}" text-anchor="end" class="axis">${t}</text>`;
+  }
+  const mp = monthLabelPos(rows);
+  let totals = {};
+  DATA.monthly.forEach((m) => totals[m.month] = m.total);
+  Object.entries(mp).forEach(([month, i]) => {
+    const x = cx(i);
+    svg += `<line x1="${x}" y1="${PAD_T}" x2="${x}" y2="${PAD_T + PLOT_H}" class="mline"/>`;
+    svg += `<text x="${x}" y="${CHART_H - 22}" text-anchor="middle" class="axis" style="font-size:11px">${MONTHS[+month.slice(5, 7) - 1]}</text>`;
+    svg += `<text x="${x}" y="${CHART_H - 7}" text-anchor="middle" class="axis">${totals[month]}</text>`;
+  });
+
+  let ma = [];
+  rows.forEach((r, i) => {
+    const lo = Math.max(0, i - (view === "weekly" ? 1 : 3));
+    const hi = Math.min(rows.length, i + (view === "weekly" ? 3 : 4));
+    const win = values.slice(lo, hi);
+    ma.push(`${cx(i)},${y(win.reduce((a, b) => a + b, 0) / win.length)}`);
+  });
+
+  rows.forEach((r, i) => {
+    const v = r.total != null ? r.total : r.count;
+    const x = cx(i) - bw / 2;
+    if (v > 0) {
+      const ty = y(v), h = PAD_T + PLOT_H - ty, r2 = Math.min(3.5, bw / 2, h);
+      svg += `<path d="M${x},${PAD_T + PLOT_H} L${x},${ty + r2} Q${x},${ty} ${x + r2},${ty} L${x + bw - r2},${ty} Q${x + bw},${ty} ${x + bw},${ty + r2} L${x + bw},${PAD_T + PLOT_H} Z" fill="url(#bfill)" data-i="${i}" class="hit"/>`;
+    } else {
+      svg += `<rect x="${x}" y="${PAD_T + PLOT_H - 2.5}" width="${bw}" height="2.5" rx="1" class="zero" data-i="${i}"/>`;
+    }
+  });
+  svg += `<path d="M ${ma.join(" L ")}" class="avg" pointer-events="none"/>`;
+  svg += `<line x1="${PAD_L}" y1="${PAD_T + PLOT_H}" x2="${CHART_W - PAD_R}" y2="${PAD_T + PLOT_H}" class="gline"/>`;
+  svg += "</svg>";
+  $("chart").innerHTML = svg;
+
+  const svgEl = $("chart").querySelector("svg");
+  svgEl.addEventListener("mousemove", (ev) => {
+    const el = ev.target.closest("[data-i]");
+    if (!el) { tip.hidden = true; return; }
+    const i = +el.dataset.i;
+    const r = rows[i];
+    const v = r.total != null ? r.total : r.count;
+    let label;
+    if (view === "weekly") {
+      const weekDays = DATA.daily.filter((d) => d.date >= r.start && d.date <= r.end);
+      const best = weekDays.reduce((a, b) => (b.count > (a ? a.count : -1) ? b : a), null);
+      label = `<b>${shortDate(r.start)} – ${shortDate(r.end)}</b><br>${fmt(v)} contributions` + (best && best.count ? `<br>best day ${shortDate(best.date)} · ${best.count}` : "");
+    } else {
+      label = `<b>${prettyDate(r.date)}</b><br>${fmt(v)} contribution${v === 1 ? "" : "s"}`;
+    }
+    tip.innerHTML = label;
+    tip.hidden = false;
+    tip.style.left = Math.min(ev.clientX + 14, window.innerWidth - 300) + "px";
+    tip.style.top = (ev.clientY + 14) + "px";
+  });
+  svgEl.addEventListener("mouseleave", () => { tip.hidden = true; });
+  svgEl.addEventListener("click", (ev) => {
+    const el = ev.target.closest("[data-i]");
+    if (!el) return;
+    selection = +el.dataset.i;
+    showDetail(rows[selection]);
+  });
+
+  $("chart-hint").textContent = view === "weekly"
+    ? "Hover a bar for the week's numbers · click to drill into its days."
+    : "Hover a bar for the day's count · click to see what happened.";
+  if (selection != null && selection < rows.length) showDetail(rows[selection]); else $("detail").hidden = true;
+}
+
+function showDetail(row) {
+  const start = row.start || row.date;
+  const end = row.end || row.date;
+  const v = row.total != null ? row.total : row.count;
+  const inRange = DATA.daily.filter((d) => d.date >= start && d.date <= end);
+  const dayLines = inRange
+    .filter((d) => d.count > 0)
+    .map((d) => {
+      const evs = EVENTS_BY_DAY[d.date] || [];
+      return `<li><span>${shortDate(d.date)} — <b>${d.count}</b> contribution${d.count === 1 ? "" : "s"}${evs.length ? " · " + evs.length + " event" + (evs.length > 1 ? "s" : "") : ""}</span></li>`;
+    }).join("");
+  const evs = DATA.events.filter((e) => e.date.slice(0, 10) >= start && e.date.slice(0, 10) <= end);
+  const evLines = evs.map((e) =>
+    `<li><span><span class="kind">${KIND_LABEL[e.kind] || e.kind}</span> ${esc(e.text)} — <a href="${e.url}" target="_blank" rel="noopener">${esc(e.repo)}</a></span><span class="when">${e.date.slice(11, 16)}</span></li>`
+  ).join("");
+  $("detail").innerHTML =
+    `<h3>${view === "weekly" ? shortDate(start) + " – " + shortDate(end) : prettyDate(start)} · ${fmt(v)} contribution${v === 1 ? "" : "s"}</h3>` +
+    (evLines ? `<ul>${evLines}</ul>` : `<ul>${dayLines || "<li><span>No recorded contributions in this window.</span></li>"}</ul>`);
+  $("detail").hidden = false;
+}
+
+$("toggle").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button");
+  if (!btn) return;
+  view = btn.dataset.view;
+  selection = null;
+  $("toggle").querySelectorAll("button").forEach((b) => b.classList.toggle("on", b === btn));
+  renderChart();
+});
+
+function repoRows(container, rows, valueLabel) {
+  const max = Math.max(...rows.map((r) => r.value), 1);
+  $(container).innerHTML = rows.map((r, i) => {
+    const pct = Math.max(3, Math.round(100 * r.value / max));
+    return `<li><a href="${r.url}" target="_blank" rel="noopener">
+      <span class="rank">${String(i + 1).padStart(2, "0")}</span>
+      <span class="name">${esc(r.name)}${r.private ? '<span class="tag">private</span>' : ""}</span>
+      <span class="val">${r.value} ${valueLabel}</span>
+      <span class="barline"><span class="bar-track"><span class="bar" style="width:${pct}%"></span></span><span class="meta">${esc(r.detail)}</span></span>
+    </a></li>`;
+  }).join("");
+}
+repoRows("focus-rows", DATA.focus, "pushes");
+repoRows("built-rows", DATA.built, "commits");
+
+const feed = $("feed");
+const byRepo = {};
+DATA.events.forEach((e) => byRepo[e.repo] = (byRepo[e.repo] || 0) + 1);
+const repoNames = Object.keys(byRepo).sort((a, b) => byRepo[b] - byRepo[a]);
+$("filter").innerHTML = '<option value="">All repos</option>' + repoNames.map((r) => `<option value="${esc(r)}">${esc(r)} (${byRepo[r]})</option>`).join("");
+
+function renderFeed() {
+  const f = $("filter").value;
+  const rows = DATA.events.filter((e) => !f || e.repo === f).slice(0, 300);
+  feed.innerHTML = rows.length ? rows.map((e) =>
+    `<li><span class="when">${shortDate(e.date.slice(0, 10))}</span><span class="kind">${KIND_LABEL[e.kind] || e.kind}</span><span style="flex:1">${esc(e.text)}</span><a class="repo" href="${e.url}" target="_blank" rel="noopener">${esc(e.repo)}</a></li>`
+  ).join("") : '<li><span style="color:var(--muted)">No events match.</span></li>';
+}
+$("filter").addEventListener("change", renderFeed);
+renderFeed();
+renderChart();
+</script>
+</body>
+</html>

@@ -8,15 +8,15 @@ I build agent workflows, automation products, and tools for focused work.
 
 ## Contribution activity
 
-Counts include private contributions.
+Counts include private contributions. Click any chart for the interactive drilldown.
 
-<img src="./assets/contributions-daily.svg" width="100%" alt="Daily GitHub contributions over the last 12 months, including private contributions">
+[<img src="./assets/contributions-weekly.svg" width="100%" alt="Weekly GitHub contributions over the last 12 months, including private contributions. Click to open the interactive dashboard.">](https://luiskisters.github.io/luisKisters/)
 
 ## Project activity
 
 <p>
-  <img src="./assets/current-focus.svg" width="49%" alt="Repositories with the most recent push activity">
-  <img src="./assets/most-built.svg" width="49%" alt="Original repositories with the most commits by Luis">
+  <a href="https://luiskisters.github.io/luisKisters/#focus"><img src="./assets/current-focus.svg" width="49%" alt="Repositories with the most recent push activity"></a>
+  <a href="https://luiskisters.github.io/luisKisters/#built"><img src="./assets/most-built.svg" width="49%" alt="Original repositories with the most commits by Luis"></a>
 </p>
 
 ## Toolbox
