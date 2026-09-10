@@ -3,8 +3,8 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 116,
-      "detail": "8 Sep 2026",
+      "value": 114,
+      "detail": "9 Sep 2026",
       "private": true
     },
     {
@@ -24,6 +24,12 @@
       "value": 2,
       "detail": "27 Aug 2026",
       "private": false
+    },
+    {
+      "name": "ai-council",
+      "value": 1,
+      "detail": "9 Sep 2026",
+      "private": true
     }
   ],
   "most_built": [
@@ -59,8 +65,8 @@
     }
   ],
   "contributions": {
-    "total": 2557,
-    "commits": 486,
+    "total": 2555,
+    "commits": 483,
     "pull_requests": 33,
     "issues": 8
   }
