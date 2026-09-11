@@ -3,7 +3,7 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 114,
+      "value": 112,
       "detail": "9 Sep 2026",
       "private": true
     },
@@ -14,8 +14,14 @@
       "private": false
     },
     {
+      "name": "yapmail",
+      "value": 3,
+      "detail": "10 Sep 2026",
+      "private": true
+    },
+    {
       "name": "skills",
-      "value": 4,
+      "value": 3,
       "detail": "26 Aug 2026",
       "private": false
     },
@@ -24,12 +30,6 @@
       "value": 2,
       "detail": "27 Aug 2026",
       "private": false
-    },
-    {
-      "name": "ai-council",
-      "value": 1,
-      "detail": "9 Sep 2026",
-      "private": true
     }
   ],
   "most_built": [
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 2555,
+    "total": 2560,
     "commits": 483,
     "pull_requests": 33,
     "issues": 8
