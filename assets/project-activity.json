@@ -3,15 +3,9 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 119,
-      "detail": "17 Sep 2026",
+      "value": 129,
+      "detail": "18 Sep 2026",
       "private": true
-    },
-    {
-      "name": "Listnr",
-      "value": 13,
-      "detail": "1 Sep 2026",
-      "private": false
     },
     {
       "name": "luisbench",
@@ -26,6 +20,12 @@
       "private": true
     },
     {
+      "name": "Listnr",
+      "value": 2,
+      "detail": "1 Sep 2026",
+      "private": false
+    },
+    {
       "name": "skills",
       "value": 1,
       "detail": "13 Sep 2026",
@@ -35,8 +35,8 @@
   "most_built": [
     {
       "name": "notetakr",
-      "value": 894,
-      "detail": "16 Sep 2026",
+      "value": 900,
+      "detail": "17 Sep 2026",
       "private": true
     },
     {
@@ -65,8 +65,8 @@
     }
   ],
   "contributions": {
-    "total": 2683,
-    "commits": 484,
+    "total": 2691,
+    "commits": 483,
     "pull_requests": 33,
     "issues": 8
   }
