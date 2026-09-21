@@ -3,14 +3,14 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 133,
+      "value": 129,
       "detail": "19 Sep 2026",
       "private": true
     },
     {
       "name": "luisbench",
-      "value": 6,
-      "detail": "14 Sep 2026",
+      "value": 8,
+      "detail": "21 Sep 2026",
       "private": true
     },
     {
@@ -21,14 +21,14 @@
     },
     {
       "name": "skills",
-      "value": 1,
-      "detail": "13 Sep 2026",
+      "value": 2,
+      "detail": "21 Sep 2026",
       "private": false
     },
     {
-      "name": "ai-council",
-      "value": 1,
-      "detail": "9 Sep 2026",
+      "name": "ai-assistant-suite",
+      "value": 2,
+      "detail": "21 Sep 2026",
       "private": true
     }
   ],
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2688,
-    "commits": 482,
+    "total": 2696,
+    "commits": 487,
     "pull_requests": 33,
-    "issues": 8
+    "issues": 9
   }
 }
