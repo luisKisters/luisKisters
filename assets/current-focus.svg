@@ -34,33 +34,33 @@
 
     <text x="24" y="92" class="rank">01</text>
     <text x="58" y="92" class="repo">notetakr</text>
-    <text x="536" y="92" text-anchor="end" class="value">72 pushes</text>
+    <text x="536" y="92" text-anchor="end" class="value">76 pushes</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
-    <text x="536" y="107" text-anchor="end" class="detail">24 Sep 2026 · private</text>
+    <text x="536" y="107" text-anchor="end" class="detail">25 Sep 2026 · private</text>
     <text x="24" y="140" class="rank">02</text>
     <text x="58" y="140" class="repo">writr</text>
-    <text x="536" y="140" text-anchor="end" class="value">60 pushes</text>
+    <text x="536" y="140" text-anchor="end" class="value">71 pushes</text>
     <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="150" width="150" height="4" rx="2" class="bar" />
-    <text x="536" y="155" text-anchor="end" class="detail">23 Sep 2026 · private</text>
+    <rect x="58" y="150" width="168" height="4" rx="2" class="bar" />
+    <text x="536" y="155" text-anchor="end" class="detail">25 Sep 2026 · private</text>
     <text x="24" y="188" class="rank">03</text>
     <text x="58" y="188" class="repo">luisbench</text>
-    <text x="536" y="188" text-anchor="end" class="value">9 pushes</text>
+    <text x="536" y="188" text-anchor="end" class="value">6 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="22" height="4" rx="2" class="bar" />
+    <rect x="58" y="198" width="14" height="4" rx="2" class="bar" />
     <text x="536" y="203" text-anchor="end" class="detail">23 Sep 2026 · private</text>
     <text x="24" y="236" class="rank">04</text>
-    <text x="58" y="236" class="repo">portfolio-v3</text>
-    <text x="536" y="236" text-anchor="end" class="value">3 pushes</text>
+    <text x="58" y="236" class="repo">summario</text>
+    <text x="536" y="236" text-anchor="end" class="value">4 pushes</text>
     <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="246" width="10" height="4" rx="2" class="bar" />
-    <text x="536" y="251" text-anchor="end" class="detail">21 Sep 2026 · private</text>
+    <text x="536" y="251" text-anchor="end" class="detail">25 Sep 2026 · private</text>
     <text x="24" y="284" class="rank">05</text>
-    <text x="58" y="284" class="repo">yapmail</text>
+    <text x="58" y="284" class="repo">spotify-playlist-graph</text>
     <text x="536" y="284" text-anchor="end" class="value">3 pushes</text>
     <rect x="58" y="294" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="294" width="10" height="4" rx="2" class="bar" />
-    <text x="536" y="299" text-anchor="end" class="detail">10 Sep 2026 · private</text>
+    <text x="536" y="299" text-anchor="end" class="detail">25 Sep 2026</text>
   
 </svg>

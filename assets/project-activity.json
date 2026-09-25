@@ -3,46 +3,46 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 72,
-      "detail": "24 Sep 2026",
+      "value": 76,
+      "detail": "25 Sep 2026",
       "private": true
     },
     {
       "name": "writr",
-      "value": 60,
-      "detail": "23 Sep 2026",
+      "value": 71,
+      "detail": "25 Sep 2026",
       "private": true
     },
     {
       "name": "luisbench",
-      "value": 9,
-      "detail": "23 Sep 2026",
-      "private": true
-    },
-    {
-      "name": "portfolio-v3",
-      "value": 3,
-      "detail": "21 Sep 2026",
-      "private": true
-    },
-    {
-      "name": "yapmail",
-      "value": 3,
-      "detail": "10 Sep 2026",
-      "private": true
-    }
-  ],
-  "most_built": [
-    {
-      "name": "notetakr",
-      "value": 906,
+      "value": 6,
       "detail": "23 Sep 2026",
       "private": true
     },
     {
       "name": "summario",
-      "value": 316,
-      "detail": "13 Jul 2026",
+      "value": 4,
+      "detail": "25 Sep 2026",
+      "private": true
+    },
+    {
+      "name": "spotify-playlist-graph",
+      "value": 3,
+      "detail": "25 Sep 2026",
+      "private": false
+    }
+  ],
+  "most_built": [
+    {
+      "name": "notetakr",
+      "value": 948,
+      "detail": "24 Sep 2026",
+      "private": true
+    },
+    {
+      "name": "summario",
+      "value": 321,
+      "detail": "25 Sep 2026",
       "private": true
     },
     {
@@ -52,22 +52,22 @@
       "private": false
     },
     {
+      "name": "writr",
+      "value": 82,
+      "detail": "25 Sep 2026",
+      "private": true
+    },
+    {
       "name": "bahnhofjaeger",
       "value": 74,
       "detail": "6 Dec 2025",
       "private": false
-    },
-    {
-      "name": "summaryApp",
-      "value": 66,
-      "detail": "11 May 2023",
-      "private": false
     }
   ],
   "contributions": {
-    "total": 2776,
-    "commits": 488,
-    "pull_requests": 34,
+    "total": 2846,
+    "commits": 490,
+    "pull_requests": 35,
     "issues": 9
   }
 }
