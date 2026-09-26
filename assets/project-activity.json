@@ -3,13 +3,13 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 76,
+      "value": 75,
       "detail": "25 Sep 2026",
       "private": true
     },
     {
       "name": "writr",
-      "value": 71,
+      "value": 73,
       "detail": "25 Sep 2026",
       "private": true
     },
@@ -20,16 +20,16 @@
       "private": true
     },
     {
+      "name": "spotify-playlist-graph",
+      "value": 4,
+      "detail": "25 Sep 2026",
+      "private": false
+    },
+    {
       "name": "summario",
       "value": 4,
       "detail": "25 Sep 2026",
       "private": true
-    },
-    {
-      "name": "spotify-playlist-graph",
-      "value": 3,
-      "detail": "25 Sep 2026",
-      "private": false
     }
   ],
   "most_built": [
@@ -46,16 +46,16 @@
       "private": true
     },
     {
+      "name": "writr",
+      "value": 84,
+      "detail": "25 Sep 2026",
+      "private": true
+    },
+    {
       "name": "model-releases-bot",
       "value": 83,
       "detail": "27 Jul 2026",
       "private": false
-    },
-    {
-      "name": "writr",
-      "value": 82,
-      "detail": "25 Sep 2026",
-      "private": true
     },
     {
       "name": "bahnhofjaeger",
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2846,
-    "commits": 490,
-    "pull_requests": 35,
+    "total": 2863,
+    "commits": 491,
+    "pull_requests": 36,
     "issues": 9
   }
 }
