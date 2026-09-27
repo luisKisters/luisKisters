@@ -2,20 +2,26 @@
   "scope": "public + private",
   "current_focus": [
     {
-      "name": "notetakr",
-      "value": 75,
-      "detail": "25 Sep 2026",
-      "private": true
-    },
-    {
       "name": "writr",
       "value": 73,
       "detail": "25 Sep 2026",
       "private": true
     },
     {
+      "name": "notetakr",
+      "value": 66,
+      "detail": "25 Sep 2026",
+      "private": true
+    },
+    {
+      "name": "focusroom-website",
+      "value": 9,
+      "detail": "27 Sep 2026",
+      "private": true
+    },
+    {
       "name": "luisbench",
-      "value": 6,
+      "value": 5,
       "detail": "23 Sep 2026",
       "private": true
     },
@@ -24,12 +30,6 @@
       "value": 4,
       "detail": "25 Sep 2026",
       "private": false
-    },
-    {
-      "name": "summario",
-      "value": 4,
-      "detail": "25 Sep 2026",
-      "private": true
     }
   ],
   "most_built": [
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2863,
+    "total": 2875,
     "commits": 491,
-    "pull_requests": 36,
+    "pull_requests": 37,
     "issues": 9
   }
 }
