@@ -9,7 +9,7 @@
     },
     {
       "name": "notetakr",
-      "value": 63,
+      "value": 60,
       "detail": "25 Sep 2026",
       "private": true
     },
@@ -20,16 +20,16 @@
       "private": true
     },
     {
-      "name": "luisbench",
-      "value": 5,
-      "detail": "23 Sep 2026",
-      "private": true
-    },
-    {
       "name": "spotify-playlist-graph",
       "value": 4,
       "detail": "25 Sep 2026",
       "private": false
+    },
+    {
+      "name": "summario",
+      "value": 4,
+      "detail": "25 Sep 2026",
+      "private": true
     }
   ],
   "most_built": [
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2875,
-    "commits": 491,
-    "pull_requests": 37,
+    "total": 2874,
+    "commits": 493,
+    "pull_requests": 38,
     "issues": 9
   }
 }
