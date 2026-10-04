@@ -9,14 +9,14 @@
     },
     {
       "name": "notetakr",
-      "value": 51,
+      "value": 38,
       "detail": "25 Sep 2026",
       "private": true
     },
     {
       "name": "focusroom-website",
-      "value": 9,
-      "detail": "27 Sep 2026",
+      "value": 15,
+      "detail": "3 Oct 2026",
       "private": true
     },
     {
@@ -26,10 +26,10 @@
       "private": false
     },
     {
-      "name": "summario",
+      "name": "calendr",
       "value": 4,
-      "detail": "25 Sep 2026",
-      "private": true
+      "detail": "2 Oct 2026",
+      "private": false
     }
   ],
   "most_built": [
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 2880,
+    "total": 2886,
     "commits": 496,
     "pull_requests": 41,
     "issues": 9
