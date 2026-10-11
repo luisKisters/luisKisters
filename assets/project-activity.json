@@ -9,7 +9,7 @@
     },
     {
       "name": "notetakr",
-      "value": 32,
+      "value": 25,
       "detail": "25 Sep 2026",
       "private": true
     },
@@ -26,9 +26,9 @@
       "private": false
     },
     {
-      "name": "calendr",
+      "name": "kleinscoutr",
       "value": 4,
-      "detail": "2 Oct 2026",
+      "detail": "10 Oct 2026",
       "private": false
     }
   ],
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2887,
-    "commits": 502,
-    "pull_requests": 41,
+    "total": 2895,
+    "commits": 506,
+    "pull_requests": 45,
     "issues": 9
   }
 }
