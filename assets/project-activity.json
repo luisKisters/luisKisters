@@ -20,15 +20,15 @@
       "private": true
     },
     {
-      "name": "spotify-playlist-graph",
+      "name": "kleinscoutr",
       "value": 5,
-      "detail": "28 Sep 2026",
+      "detail": "10 Oct 2026",
       "private": false
     },
     {
-      "name": "kleinscoutr",
-      "value": 4,
-      "detail": "10 Oct 2026",
+      "name": "spotify-playlist-graph",
+      "value": 5,
+      "detail": "28 Sep 2026",
       "private": false
     }
   ],
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 2895,
+    "total": 2899,
     "commits": 506,
     "pull_requests": 45,
     "issues": 9
