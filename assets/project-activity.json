@@ -21,7 +21,7 @@
     },
     {
       "name": "kleinscoutr",
-      "value": 6,
+      "value": 5,
       "detail": "10 Oct 2026",
       "private": false
     },
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 2899,
+    "total": 2902,
     "commits": 506,
-    "pull_requests": 45,
+    "pull_requests": 47,
     "issues": 9
   }
 }
