@@ -34,7 +34,7 @@
 
     <text x="24" y="92" class="rank">01</text>
     <text x="58" y="92" class="repo">notetakr</text>
-    <text x="536" y="92" text-anchor="end" class="value">997 commits</text>
+    <text x="536" y="92" text-anchor="end" class="value">1003 commits</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
     <text x="536" y="107" text-anchor="end" class="detail">15 Oct 2026 · private</text>
