@@ -3,14 +3,14 @@
   "current_focus": [
     {
       "name": "writr",
-      "value": 48,
+      "value": 41,
       "detail": "25 Sep 2026",
       "private": true
     },
     {
       "name": "notetakr",
-      "value": 32,
-      "detail": "15 Oct 2026",
+      "value": 36,
+      "detail": "16 Oct 2026",
       "private": true
     },
     {
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 3018,
+    "total": 3025,
     "commits": 506,
     "pull_requests": 47,
     "issues": 9
