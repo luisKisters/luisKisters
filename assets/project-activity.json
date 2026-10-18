@@ -2,15 +2,15 @@
   "scope": "public + private",
   "current_focus": [
     {
-      "name": "writr",
-      "value": 41,
-      "detail": "25 Sep 2026",
+      "name": "notetakr",
+      "value": 35,
+      "detail": "16 Oct 2026",
       "private": true
     },
     {
-      "name": "notetakr",
-      "value": 36,
-      "detail": "16 Oct 2026",
+      "name": "writr",
+      "value": 29,
+      "detail": "25 Sep 2026",
       "private": true
     },
     {
@@ -65,8 +65,8 @@
     }
   ],
   "contributions": {
-    "total": 3025,
-    "commits": 506,
+    "total": 3040,
+    "commits": 509,
     "pull_requests": 47,
     "issues": 9
   }
