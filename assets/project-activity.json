@@ -3,14 +3,14 @@
   "current_focus": [
     {
       "name": "notetakr",
-      "value": 35,
+      "value": 31,
       "detail": "16 Oct 2026",
       "private": true
     },
     {
-      "name": "writr",
-      "value": 29,
-      "detail": "25 Sep 2026",
+      "name": "ai-text-marker",
+      "value": 18,
+      "detail": "18 Oct 2026",
       "private": true
     },
     {
@@ -20,16 +20,16 @@
       "private": true
     },
     {
-      "name": "kleinscoutr",
-      "value": 5,
-      "detail": "10 Oct 2026",
-      "private": false
+      "name": "writr",
+      "value": 12,
+      "detail": "25 Sep 2026",
+      "private": true
     },
     {
-      "name": "spotify-playlist-graph",
+      "name": "slopout",
       "value": 5,
-      "detail": "28 Sep 2026",
-      "private": false
+      "detail": "18 Oct 2026",
+      "private": true
     }
   ],
   "most_built": [
@@ -65,8 +65,8 @@
     }
   ],
   "contributions": {
-    "total": 3040,
-    "commits": 509,
+    "total": 3051,
+    "commits": 513,
     "pull_requests": 47,
     "issues": 9
   }
