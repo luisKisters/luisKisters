@@ -2,15 +2,15 @@
   "scope": "public + private",
   "current_focus": [
     {
-      "name": "notetakr",
-      "value": 31,
-      "detail": "16 Oct 2026",
+      "name": "ai-text-marker",
+      "value": 26,
+      "detail": "18 Oct 2026",
       "private": true
     },
     {
-      "name": "ai-text-marker",
-      "value": 18,
-      "detail": "18 Oct 2026",
+      "name": "notetakr",
+      "value": 25,
+      "detail": "16 Oct 2026",
       "private": true
     },
     {
@@ -20,16 +20,16 @@
       "private": true
     },
     {
-      "name": "writr",
-      "value": 12,
-      "detail": "25 Sep 2026",
+      "name": "slopout",
+      "value": 10,
+      "detail": "20 Oct 2026",
       "private": true
     },
     {
-      "name": "slopout",
+      "name": "kleinscoutr",
       "value": 5,
-      "detail": "18 Oct 2026",
-      "private": true
+      "detail": "10 Oct 2026",
+      "private": false
     }
   ],
   "most_built": [
@@ -65,8 +65,8 @@
     }
   ],
   "contributions": {
-    "total": 3051,
-    "commits": 513,
+    "total": 3073,
+    "commits": 514,
     "pull_requests": 47,
     "issues": 9
   }
