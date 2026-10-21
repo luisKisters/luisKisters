@@ -2,6 +2,12 @@
   "scope": "public + private",
   "current_focus": [
     {
+      "name": "slopout",
+      "value": 29,
+      "detail": "20 Oct 2026",
+      "private": true
+    },
+    {
       "name": "ai-text-marker",
       "value": 26,
       "detail": "18 Oct 2026",
@@ -9,26 +15,20 @@
     },
     {
       "name": "notetakr",
-      "value": 25,
+      "value": 24,
       "detail": "16 Oct 2026",
       "private": true
     },
     {
       "name": "focusroom-website",
-      "value": 17,
+      "value": 10,
       "detail": "3 Oct 2026",
       "private": true
     },
     {
-      "name": "slopout",
-      "value": 10,
+      "name": "slopout-evals",
+      "value": 6,
       "detail": "20 Oct 2026",
-      "private": true
-    },
-    {
-      "name": "kleinscoutr",
-      "value": 5,
-      "detail": "10 Oct 2026",
       "private": false
     }
   ],
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 3073,
-    "commits": 514,
-    "pull_requests": 47,
+    "total": 3080,
+    "commits": 515,
+    "pull_requests": 49,
     "issues": 9
   }
 }
