@@ -3,7 +3,7 @@
   "current_focus": [
     {
       "name": "slopout",
-      "value": 29,
+      "value": 41,
       "detail": "20 Oct 2026",
       "private": true
     },
@@ -20,16 +20,16 @@
       "private": true
     },
     {
-      "name": "focusroom-website",
-      "value": 10,
-      "detail": "3 Oct 2026",
-      "private": true
-    },
-    {
       "name": "slopout-evals",
-      "value": 6,
+      "value": 8,
       "detail": "20 Oct 2026",
       "private": false
+    },
+    {
+      "name": "focusroom-website",
+      "value": 8,
+      "detail": "3 Oct 2026",
+      "private": true
     }
   ],
   "most_built": [
