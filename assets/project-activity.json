@@ -20,16 +20,16 @@
       "private": true
     },
     {
+      "name": "x-declutter",
+      "value": 8,
+      "detail": "26 Oct 2026",
+      "private": true
+    },
+    {
       "name": "slopout-evals",
       "value": 8,
       "detail": "20 Oct 2026",
       "private": false
-    },
-    {
-      "name": "focusroom-website",
-      "value": 8,
-      "detail": "3 Oct 2026",
-      "private": true
     }
   ],
   "most_built": [
