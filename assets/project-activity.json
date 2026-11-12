@@ -3,8 +3,8 @@
   "current_focus": [
     {
       "name": "slopout",
-      "value": 43,
-      "detail": "20 Oct 2026",
+      "value": 61,
+      "detail": "10 Nov 2026",
       "private": true
     },
     {
@@ -15,7 +15,7 @@
     },
     {
       "name": "notetakr",
-      "value": 23,
+      "value": 18,
       "detail": "16 Oct 2026",
       "private": true
     },
@@ -26,10 +26,10 @@
       "private": true
     },
     {
-      "name": "x-declutter",
-      "value": 8,
-      "detail": "26 Oct 2026",
-      "private": true
+      "name": "slopout-evals",
+      "value": 10,
+      "detail": "10 Nov 2026",
+      "private": false
     }
   ],
   "most_built": [
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 3169,
+    "total": 3171,
     "commits": 530,
     "pull_requests": 63,
     "issues": 10
