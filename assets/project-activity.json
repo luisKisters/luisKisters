@@ -14,12 +14,6 @@
       "private": true
     },
     {
-      "name": "notetakr",
-      "value": 17,
-      "detail": "16 Oct 2026",
-      "private": true
-    },
-    {
       "name": "summario",
       "value": 13,
       "detail": "2 Nov 2026",
@@ -30,6 +24,12 @@
       "value": 10,
       "detail": "10 Nov 2026",
       "private": false
+    },
+    {
+      "name": "notetakr",
+      "value": 10,
+      "detail": "16 Oct 2026",
+      "private": true
     }
   ],
   "most_built": [
