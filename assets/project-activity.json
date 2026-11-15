@@ -15,8 +15,8 @@
     },
     {
       "name": "summario",
-      "value": 13,
-      "detail": "2 Nov 2026",
+      "value": 14,
+      "detail": "12 Nov 2026",
       "private": true
     },
     {
@@ -26,9 +26,9 @@
       "private": false
     },
     {
-      "name": "notetakr",
-      "value": 10,
-      "detail": "16 Oct 2026",
+      "name": "x-declutter",
+      "value": 8,
+      "detail": "26 Oct 2026",
       "private": true
     }
   ],
