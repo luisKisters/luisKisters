@@ -3,14 +3,8 @@
   "current_focus": [
     {
       "name": "slopout",
-      "value": 63,
+      "value": 55,
       "detail": "10 Nov 2026",
-      "private": true
-    },
-    {
-      "name": "ai-text-marker",
-      "value": 26,
-      "detail": "18 Oct 2026",
       "private": true
     },
     {
@@ -21,7 +15,7 @@
     },
     {
       "name": "slopout-evals",
-      "value": 10,
+      "value": 8,
       "detail": "10 Nov 2026",
       "private": false
     },
@@ -30,6 +24,12 @@
       "value": 8,
       "detail": "26 Oct 2026",
       "private": true
+    },
+    {
+      "name": "bahnhofjaeger",
+      "value": 7,
+      "detail": "3 Nov 2026",
+      "private": false
     }
   ],
   "most_built": [
@@ -65,7 +65,7 @@
     }
   ],
   "contributions": {
-    "total": 3185,
+    "total": 3190,
     "commits": 530,
     "pull_requests": 63,
     "issues": 10
