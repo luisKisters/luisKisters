@@ -8,6 +8,12 @@
       "private": true
     },
     {
+      "name": "horion",
+      "value": 15,
+      "detail": "21 Nov 2026",
+      "private": false
+    },
+    {
       "name": "summario",
       "value": 14,
       "detail": "12 Nov 2026",
@@ -24,12 +30,6 @@
       "value": 6,
       "detail": "16 Nov 2026",
       "private": true
-    },
-    {
-      "name": "skills",
-      "value": 5,
-      "detail": "17 Nov 2026",
-      "private": false
     }
   ],
   "most_built": [
@@ -46,6 +46,12 @@
       "private": true
     },
     {
+      "name": "horion",
+      "value": 107,
+      "detail": "21 Nov 2026",
+      "private": false
+    },
+    {
       "name": "writr",
       "value": 84,
       "detail": "25 Sep 2026",
@@ -56,18 +62,12 @@
       "value": 84,
       "detail": "3 Nov 2026",
       "private": false
-    },
-    {
-      "name": "model-releases-bot",
-      "value": 83,
-      "detail": "27 Jul 2026",
-      "private": false
     }
   ],
   "contributions": {
-    "total": 3204,
-    "commits": 531,
-    "pull_requests": 66,
+    "total": 3326,
+    "commits": 635,
+    "pull_requests": 83,
     "issues": 11
   }
 }
