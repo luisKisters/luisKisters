@@ -2,16 +2,16 @@
   "scope": "public + private",
   "current_focus": [
     {
+      "name": "horion",
+      "value": 20,
+      "detail": "21 Nov 2026",
+      "private": false
+    },
+    {
       "name": "slopout",
       "value": 20,
       "detail": "10 Nov 2026",
       "private": true
-    },
-    {
-      "name": "horion",
-      "value": 15,
-      "detail": "21 Nov 2026",
-      "private": false
     },
     {
       "name": "summario",
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 3326,
+    "total": 3327,
     "commits": 635,
-    "pull_requests": 83,
+    "pull_requests": 84,
     "issues": 11
   }
 }
