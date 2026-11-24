@@ -3,8 +3,8 @@
   "current_focus": [
     {
       "name": "horion",
-      "value": 20,
-      "detail": "21 Nov 2026",
+      "value": 26,
+      "detail": "23 Nov 2026",
       "private": false
     },
     {
@@ -26,10 +26,10 @@
       "private": false
     },
     {
-      "name": "bierpinsel-video",
+      "name": "skills",
       "value": 6,
-      "detail": "16 Nov 2026",
-      "private": true
+      "detail": "21 Nov 2026",
+      "private": false
     }
   ],
   "most_built": [
@@ -47,8 +47,8 @@
     },
     {
       "name": "horion",
-      "value": 107,
-      "detail": "21 Nov 2026",
+      "value": 148,
+      "detail": "23 Nov 2026",
       "private": false
     },
     {
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 3327,
-    "commits": 635,
-    "pull_requests": 84,
+    "total": 3492,
+    "commits": 788,
+    "pull_requests": 92,
     "issues": 11
   }
 }
