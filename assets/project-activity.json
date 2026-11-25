@@ -3,8 +3,8 @@
   "current_focus": [
     {
       "name": "horion",
-      "value": 26,
-      "detail": "23 Nov 2026",
+      "value": 33,
+      "detail": "24 Nov 2026",
       "private": false
     },
     {
@@ -26,10 +26,10 @@
       "private": false
     },
     {
-      "name": "skills",
+      "name": "tucholsky-der-graben",
       "value": 6,
-      "detail": "21 Nov 2026",
-      "private": false
+      "detail": "24 Nov 2026",
+      "private": true
     }
   ],
   "most_built": [
@@ -47,8 +47,8 @@
     },
     {
       "name": "horion",
-      "value": 148,
-      "detail": "23 Nov 2026",
+      "value": 156,
+      "detail": "24 Nov 2026",
       "private": false
     },
     {
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 3492,
-    "commits": 788,
-    "pull_requests": 92,
-    "issues": 11
+    "total": 3518,
+    "commits": 797,
+    "pull_requests": 102,
+    "issues": 13
   }
 }
