@@ -34,33 +34,33 @@
 
     <text x="24" y="92" class="rank">01</text>
     <text x="58" y="92" class="repo">horion</text>
-    <text x="536" y="92" text-anchor="end" class="value">37 pushes</text>
+    <text x="536" y="92" text-anchor="end" class="value">40 pushes</text>
     <rect x="58" y="102" width="180" height="4" rx="2" class="track" />
     <rect x="58" y="102" width="180" height="4" rx="2" class="bar" />
-    <text x="536" y="107" text-anchor="end" class="detail">24 Nov 2026</text>
+    <text x="536" y="107" text-anchor="end" class="detail">26 Nov 2026</text>
     <text x="24" y="140" class="rank">02</text>
     <text x="58" y="140" class="repo">slopout</text>
     <text x="536" y="140" text-anchor="end" class="value">20 pushes</text>
     <rect x="58" y="150" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="150" width="97" height="4" rx="2" class="bar" />
+    <rect x="58" y="150" width="90" height="4" rx="2" class="bar" />
     <text x="536" y="155" text-anchor="end" class="detail">10 Nov 2026 · private</text>
     <text x="24" y="188" class="rank">03</text>
-    <text x="58" y="188" class="repo">summario</text>
-    <text x="536" y="188" text-anchor="end" class="value">11 pushes</text>
+    <text x="58" y="188" class="repo">tucholsky-der-graben</text>
+    <text x="536" y="188" text-anchor="end" class="value">16 pushes</text>
     <rect x="58" y="198" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="198" width="54" height="4" rx="2" class="bar" />
-    <text x="536" y="203" text-anchor="end" class="detail">12 Nov 2026 · private</text>
+    <rect x="58" y="198" width="72" height="4" rx="2" class="bar" />
+    <text x="536" y="203" text-anchor="end" class="detail">25 Nov 2026 · private</text>
     <text x="24" y="236" class="rank">04</text>
-    <text x="58" y="236" class="repo">tucholsky-der-graben</text>
-    <text x="536" y="236" text-anchor="end" class="value">10 pushes</text>
+    <text x="58" y="236" class="repo">bierpinsel-video</text>
+    <text x="536" y="236" text-anchor="end" class="value">6 pushes</text>
     <rect x="58" y="246" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="246" width="49" height="4" rx="2" class="bar" />
-    <text x="536" y="251" text-anchor="end" class="detail">25 Nov 2026 · private</text>
+    <rect x="58" y="246" width="27" height="4" rx="2" class="bar" />
+    <text x="536" y="251" text-anchor="end" class="detail">16 Nov 2026 · private</text>
     <text x="24" y="284" class="rank">05</text>
-    <text x="58" y="284" class="repo">bahnhofjaeger</text>
-    <text x="536" y="284" text-anchor="end" class="value">7 pushes</text>
+    <text x="58" y="284" class="repo">skills</text>
+    <text x="536" y="284" text-anchor="end" class="value">4 pushes</text>
     <rect x="58" y="294" width="180" height="4" rx="2" class="track" />
-    <rect x="58" y="294" width="34" height="4" rx="2" class="bar" />
-    <text x="536" y="299" text-anchor="end" class="detail">3 Nov 2026</text>
+    <rect x="58" y="294" width="18" height="4" rx="2" class="bar" />
+    <text x="536" y="299" text-anchor="end" class="detail">21 Nov 2026</text>
   
 </svg>

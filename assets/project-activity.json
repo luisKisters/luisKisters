@@ -3,8 +3,8 @@
   "current_focus": [
     {
       "name": "horion",
-      "value": 37,
-      "detail": "24 Nov 2026",
+      "value": 40,
+      "detail": "26 Nov 2026",
       "private": false
     },
     {
@@ -14,21 +14,21 @@
       "private": true
     },
     {
-      "name": "summario",
-      "value": 11,
-      "detail": "12 Nov 2026",
-      "private": true
-    },
-    {
       "name": "tucholsky-der-graben",
-      "value": 10,
+      "value": 16,
       "detail": "25 Nov 2026",
       "private": true
     },
     {
-      "name": "bahnhofjaeger",
-      "value": 7,
-      "detail": "3 Nov 2026",
+      "name": "bierpinsel-video",
+      "value": 6,
+      "detail": "16 Nov 2026",
+      "private": true
+    },
+    {
+      "name": "skills",
+      "value": 4,
+      "detail": "21 Nov 2026",
       "private": false
     }
   ],
@@ -47,8 +47,8 @@
     },
     {
       "name": "horion",
-      "value": 163,
-      "detail": "25 Nov 2026",
+      "value": 195,
+      "detail": "26 Nov 2026",
       "private": false
     },
     {
@@ -65,9 +65,9 @@
     }
   ],
   "contributions": {
-    "total": 3536,
-    "commits": 804,
-    "pull_requests": 103,
+    "total": 3578,
+    "commits": 838,
+    "pull_requests": 109,
     "issues": 13
   }
 }
