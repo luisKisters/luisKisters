@@ -3,15 +3,9 @@
   "current_focus": [
     {
       "name": "horion",
-      "value": 40,
-      "detail": "26 Nov 2026",
+      "value": 50,
+      "detail": "27 Nov 2026",
       "private": false
-    },
-    {
-      "name": "slopout",
-      "value": 20,
-      "detail": "10 Nov 2026",
-      "private": true
     },
     {
       "name": "tucholsky-der-graben",
@@ -20,16 +14,16 @@
       "private": true
     },
     {
-      "name": "bierpinsel-video",
-      "value": 6,
-      "detail": "16 Nov 2026",
-      "private": true
+      "name": "skills",
+      "value": 3,
+      "detail": "26 Nov 2026",
+      "private": false
     },
     {
-      "name": "skills",
-      "value": 4,
-      "detail": "21 Nov 2026",
-      "private": false
+      "name": "bierpinsel-video",
+      "value": 2,
+      "detail": "16 Nov 2026",
+      "private": true
     }
   ],
   "most_built": [
@@ -47,8 +41,8 @@
     },
     {
       "name": "horion",
-      "value": 195,
-      "detail": "26 Nov 2026",
+      "value": 201,
+      "detail": "27 Nov 2026",
       "private": false
     },
     {
@@ -65,9 +59,9 @@
     }
   ],
   "contributions": {
-    "total": 3578,
-    "commits": 838,
-    "pull_requests": 109,
+    "total": 3589,
+    "commits": 844,
+    "pull_requests": 110,
     "issues": 13
   }
 }
